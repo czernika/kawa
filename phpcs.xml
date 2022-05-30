@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<ruleset name="Kawa">
+    <description>Kawa Coding Standards</description>
+
+    <!-- Scan all files in directory -->
+    <file>.</file>
+
+    <!-- Scan only PHP files -->
+    <arg name="extensions" value="php"/>
+
+    <!-- Ignore WordPress and Composer dependencies -->
+    <exclude-pattern>web/wp</exclude-pattern>
+    <exclude-pattern>vendor/</exclude-pattern>
+    <exclude-pattern>tests/</exclude-pattern>
+
+    <!-- Show progression -->
+    <arg value="p"/>
+
+	<!-- Enable colors in report -->
+    <arg name="colors"/>
+
+    <!-- Add source codes in the report -->
+    <arg value="s"/>
+
+    <!-- Default tab width for indentation fixes and such -->
+	<arg name="tab-width" value="4"/>
+
+    <!-- Use PSR-2 as a base -->
+    <rule ref="PSR2">
+
+		<!-- Allow tabs -->
+        <exclude name="Generic.WhiteSpace.DisallowTabIndent.TabsUsed"></exclude>
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"></exclude>
+    </rule>
+
+	<!-- Lines can be N chars long (warnings), errors at M chars -->
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="300"/>
+			<property name="absoluteLineLimit" value="500"/>
+		</properties>
+	</rule>
+</ruleset>
