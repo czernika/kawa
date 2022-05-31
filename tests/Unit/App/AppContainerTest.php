@@ -9,6 +9,7 @@ use DI\NotFoundException;
 use Dummy\Dummy;
 use Kawa\App\App;
 use Kawa\App\Exceptions\AppContainerException;
+use Kawa\Foundation\KernelInterface;
 use PHPUnit\Framework\TestCase;
 
 class AppContainerTest extends TestCase
@@ -88,7 +89,7 @@ class AppContainerTest extends TestCase
 	{
 		$this->app->bind('foo', \DI\create(Dummy::class));
 		$get = $this->app->get('foo');
-		$make = $this->app->make('foo');
+		$make = $this->app->get('foo');
 		$this->assertNotSame($get, $make);
 	}
 

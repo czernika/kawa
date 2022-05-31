@@ -57,7 +57,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Kawa\\": "src/core"
+            "Kawa\\": "src/core",
+            "Theme\\": "web/app/themes/kawa/src"
         },
         "files": [
             "src/core/helpers.php"

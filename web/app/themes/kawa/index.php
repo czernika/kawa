@@ -10,3 +10,9 @@
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  * @package Kawa
  */
+
+use Kawa\Foundation\Request;
+
+$request = Request::createFromGlobals();
+
+do_action('kawa/response', $request);

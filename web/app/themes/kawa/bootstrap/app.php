@@ -8,6 +8,8 @@
 
 use DI\Container;
 use Kawa\App\App;
+use Kawa\Foundation\KernelInterface;
+use Theme\Http\Kernel;
 
 /**
  * -------------------------------------------------------------------------
@@ -25,8 +27,12 @@ $container = new Container();
  * -------------------------------------------------------------------------
  *
  * This will instantiate app service container
+ *
+ * Also we need to define KernelInterface object
  */
 $app = new App($container);
+
+$app->singleton(KernelInterface::class, \DI\create(Kernel::class));
 
 /**
  * -------------------------------------------------------------------------

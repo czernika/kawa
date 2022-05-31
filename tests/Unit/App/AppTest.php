@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace Unit\App;
 
 use DI\Container;
+use DI\Definition\Exception\InvalidDefinition;
 use Dummy\Dummy;
 use Kawa\App\App;
+use Kawa\Foundation\KernelInterface;
 use PHPUnit\Framework\TestCase;
+use Theme\Http\Kernel;
+
+use function Brain\Monkey\setUp;
+use function Brain\Monkey\tearDown;
 
 class AppTest extends TestCase
 {
@@ -21,6 +27,13 @@ class AppTest extends TestCase
 	{
 		$this->container = new Container();
 		$this->app = new App($this->container);
+
+		setUp();
+	}
+
+	protected function tearDown(): void
+	{
+		tearDown();
 	}
 
 	/** @group app */
@@ -30,8 +43,18 @@ class AppTest extends TestCase
 	}
 
 	/** @group app */
+	public function test_app_should_instantiate_kernel_interface()
+	{
+		$this->expectException(InvalidDefinition::class);
+		$this->app->boot();
+	}
+
+	/** @group app */
 	public function test_app_helper_is_same_as_app()
 	{
+		// TODO We have to initialize KernelInterface
+		$this->app->singleton(KernelInterface::class, \DI\create(Kernel::class));
+
 		$this->app->boot();
 		$this->assertSame(app(), $this->app);
 		$this->assertInstanceOf(Dummy::class, app(Dummy::class));

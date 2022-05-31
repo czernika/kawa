@@ -9,7 +9,11 @@ declare(strict_types=1);
 
 namespace Kawa\App;
 
+use Kawa\Bootstrappers\BootServiceProvider;
 use Kawa\Bootstrappers\Helpers;
+use Kawa\Bootstrappers\RegisterServiceProvider;
+use Kawa\Foundation\Kernel;
+use Kawa\Foundation\KernelInterface;
 
 class App extends AppContainer
 {
@@ -21,6 +25,9 @@ class App extends AppContainer
 	 */
 	private bool $isBooted = false;
 
+	/** @var KernelInterface */
+	protected KernelInterface $kernel;
+
 	/**
 	 * List of app bootstrapers
 	 *
@@ -28,11 +35,14 @@ class App extends AppContainer
 	 */
 	private array $bootstrappers = [
 		Helpers::class,
+		RegisterServiceProvider::class,
+		BootServiceProvider::class,
 	];
 
 	/**
 	 * Boot application
 	 *
+	 * @throws \DI\Definition\Exception\InvalidDefinition if no KernelInterface instantiated
 	 * @return void
 	 */
 	public function boot() : void
@@ -41,9 +51,22 @@ class App extends AppContainer
 			return;
 		}
 
+		$this->kernel = $this->get(KernelInterface::class);
+
 		$this->runBootstrappers();
+		$this->bootKernel();
 
 		$this->isBooted = true;
+	}
+
+	/**
+	 * Boot application kernel
+	 *
+	 * @return void
+	 */
+	public function bootKernel() : void
+	{
+		add_action('kawa/response', [$this->kernel, 'handle']);
 	}
 
 	/**

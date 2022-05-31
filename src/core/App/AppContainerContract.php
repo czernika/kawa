@@ -13,6 +13,8 @@ interface AppContainerContract
 	 * Get binded value
 	 *
 	 * @param string $key
+	 * @throws \DI\DependencyException if error while resolving the entry
+	 * @throws \DI\NotFoundException if no key was found
 	 * @return mixed
 	 */
 	public function get(string $key) : mixed;
