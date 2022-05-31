@@ -1,6 +1,6 @@
 <?php
 /**
- * Instantiate helpers, facades and debugger
+ * Instantiate helpers, facades and other
  */
 
 declare(strict_types=1);

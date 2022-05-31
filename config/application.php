@@ -9,6 +9,8 @@
  */
 
 use Roots\WPConfig\Config;
+use Tracy\Debugger;
+
 use function Env\env;
 
 /**

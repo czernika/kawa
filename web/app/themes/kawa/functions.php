@@ -9,6 +9,16 @@
 
 /**
  * -------------------------------------------------------------------------
+ * Define app debugger
+ * -------------------------------------------------------------------------
+ *
+ * This file is required for Tracy debugger. Include it first
+ * as we want to catch any errors (core included)
+ */
+require_once __DIR__ . '/bootstrap/debugger.php';
+
+/**
+ * -------------------------------------------------------------------------
  * Boot application
  * -------------------------------------------------------------------------
  *
