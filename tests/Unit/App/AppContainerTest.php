@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Unit\App;
 
 use DI\Container;
+use DI\NotFoundException;
 use Dummy\Dummy;
 use Kawa\App\App;
 use PHPUnit\Framework\TestCase;
@@ -26,6 +27,7 @@ class AppContainerTest extends TestCase
 	/** @group app-container */
     public function test_app_container_may_bind_and_resolve_instance()
 	{
+		$this->assertFalse($this->app->has('foo'));
 		$this->app->set('foo', 'bar');
 		$this->assertTrue($this->app->has('foo'));
 		$this->assertSame('bar', $this->app->get('foo'));
@@ -62,5 +64,12 @@ class AppContainerTest extends TestCase
 	{
 		$result = $this->app->call($callable);
 		$this->assertSame('foo', $result);
+	}
+
+	/** @group app-container */
+    public function test_app_container_throws_exception_if_value_doesnt_exists()
+	{
+		$this->expectException(NotFoundException::class);
+		$this->app->get('foo');
 	}
 }

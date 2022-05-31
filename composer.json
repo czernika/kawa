@@ -57,7 +57,10 @@
     "autoload": {
         "psr-4": {
             "Kawa\\": "src/core"
-        }
+        },
+        "files": [
+            "src/core/helpers.php"
+        ]
     },
     "config": {
         "allow-plugins": {

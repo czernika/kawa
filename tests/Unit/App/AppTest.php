@@ -28,4 +28,12 @@ class AppTest extends TestCase
 	{
 		$this->assertSame($this->container, $this->app->container());
 	}
+
+	/** @group app */
+	public function test_app_helper_is_same_as_app()
+	{
+		$this->app->boot();
+		$this->assertSame(app(), $this->app);
+		$this->assertInstanceOf(Dummy::class, app(Dummy::class));
+	}
 }
