@@ -23,7 +23,7 @@ class RouterTest extends TestCase
 		$this->assertEmpty($this->router->collection());
 		$this->router->isFrontPage(fn() => 'foo');
 		$this->assertNotEmpty($this->router->collection());
-		$this->assertNotEmpty($this->router->collection()->getRoutes('GET'));
+		$this->assertNotEmpty($this->router->routes('GET'));
 	}
 
 	/** @group router */
@@ -40,7 +40,7 @@ class RouterTest extends TestCase
 		});
 		$this->assertNotEmpty($this->router->collection());
 
-		$routes = $this->router->collection()->getRoutes('GET');
+		$routes = $this->router->routes('GET');
 
 		$this->assertSame('bar', $routes[0]->getAttribute('foo'));
 		$this->assertSame('bar', $routes[1]->getAttribute('foo'));
@@ -56,8 +56,10 @@ class RouterTest extends TestCase
 	{
 		$this->router->$method(fn() => 'foo');
 
-		$route = $this->router->collection()->getRoutes('GET')[0];
+		/** @var Route */
+		$route = $this->router->routes('GET')[0];
+		$condition = $route->getCondition();
 
-		$this->assertSame($params, $route->getCondition());
+		$this->assertSame($params, $condition->getParameters());
 	}
 }

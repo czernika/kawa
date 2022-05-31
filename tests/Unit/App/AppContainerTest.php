@@ -9,7 +9,6 @@ use DI\NotFoundException;
 use Dummy\Dummy;
 use Kawa\App\App;
 use Kawa\App\Exceptions\AppContainerException;
-use Kawa\Foundation\KernelInterface;
 use PHPUnit\Framework\TestCase;
 
 class AppContainerTest extends TestCase

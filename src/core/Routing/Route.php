@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Kawa\Routing;
 
+use Kawa\Routing\MatchesCondition\ConditionInterface;
 use Kawa\Support\Traits\HasAttributes;
 
-class Route
+class Route implements RouteInterface
 {
 	use HasAttributes;
 
@@ -27,9 +28,7 @@ class Route
 	}
 
 	/**
-	 * Get route handler
-	 *
-	 * @return callable|array
+	 * @inheritDoc
 	 */
 	public function getHandler() : callable|array
 	{
@@ -48,12 +47,27 @@ class Route
 	}
 
 	/**
-	 * Get route method
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
 	public function getMethod() : string
 	{
 		return $this->getAttribute('method');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCondition() : ConditionInterface
+	{
+		return $this->getAttribute('condition');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function isSatisfied() : bool
+	{
+		$condition = $this->getCondition();
+		return $condition->isSatisfied();
 	}
 }

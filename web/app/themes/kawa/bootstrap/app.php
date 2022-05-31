@@ -9,6 +9,7 @@
 use DI\Container;
 use Kawa\App\App;
 use Kawa\Foundation\KernelInterface;
+use Kawa\Routing\Router;
 use Theme\Http\Kernel;
 
 /**
@@ -32,7 +33,11 @@ $container = new Container();
  */
 $app = new App($container);
 
-$app->singleton(KernelInterface::class, \DI\create(Kernel::class));
+$app->singleton(
+	KernelInterface::class,
+	\DI\create(Kernel::class)
+		->constructor(\DI\get(Router::class))
+);
 
 /**
  * -------------------------------------------------------------------------

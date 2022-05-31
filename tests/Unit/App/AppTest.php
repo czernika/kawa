@@ -9,6 +9,7 @@ use DI\Definition\Exception\InvalidDefinition;
 use Dummy\Dummy;
 use Kawa\App\App;
 use Kawa\Foundation\KernelInterface;
+use Kawa\Routing\Router;
 use PHPUnit\Framework\TestCase;
 use Theme\Http\Kernel;
 
@@ -53,7 +54,11 @@ class AppTest extends TestCase
 	public function test_app_helper_is_same_as_app()
 	{
 		// TODO We have to initialize KernelInterface
-		$this->app->singleton(KernelInterface::class, \DI\create(Kernel::class));
+		$this->app->singleton(
+			KernelInterface::class,
+			\DI\create(Kernel::class)
+				->constructor(\DI\get(Router::class)),
+		);
 
 		$this->app->boot();
 		$this->assertSame(app(), $this->app);

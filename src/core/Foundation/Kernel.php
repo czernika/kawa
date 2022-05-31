@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace Kawa\Foundation;
 
+use Kawa\Routing\Router;
+use Kawa\Support\Facades\Route;
+
 class Kernel implements KernelInterface
 {
 
@@ -19,12 +22,18 @@ class Kernel implements KernelInterface
 	 */
 	protected array $providers = [];
 
+	public function __construct(protected Router $router)
+	{
+
+	}
+
 	/**
 	 * @inheritDoc
 	 */
 	public function handle(Request $request) : void
 	{
-		echo 'Hello World';
+
+		echo 'Happy End!';
 	}
 
 	/**

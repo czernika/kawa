@@ -7,6 +7,7 @@ namespace Kawa\Bootstrappers;
 use InvalidArgumentException;
 use Kawa\App\App;
 use Kawa\Foundation\KernelInterface;
+use Kawa\Providers\ContainerServiceProvider;
 
 abstract class RunServiceProviders implements BootInterface
 {
@@ -23,7 +24,9 @@ abstract class RunServiceProviders implements BootInterface
 	 *
 	 * @var array
 	 */
-	protected array $appServiceProviders = [];
+	protected array $appServiceProviders = [
+		ContainerServiceProvider::class,
+	];
 
 	/**
 	 * Run register or boot method of service provided

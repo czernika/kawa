@@ -332,12 +332,23 @@ class Router
 	}
 
 	/**
-	 * Get all app routes
+	 * Get routes collection
 	 *
 	 * @return RoutesCollection
 	 */
 	public function collection() : RoutesCollection
 	{
 		return $this->collection;
+	}
+
+	/**
+	 * Get all app routes
+	 *
+	 * @param string $method
+	 * @return array
+	 */
+	public function routes(string $method) : array
+	{
+		return $this->collection->getRoutes($method);
 	}
 }

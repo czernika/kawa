@@ -9,6 +9,7 @@ namespace Kawa\Bootstrappers;
 
 use Kawa\App\App;
 use Kawa\Routing\HandlerDispatcher;
+use Kawa\Support\Facades\Facade;
 use Kawa\Support\Helper;
 
 class Helpers implements BootInterface
@@ -18,6 +19,7 @@ class Helpers implements BootInterface
 	 */
 	public function run(App $app) : void
 	{
+		Facade::instantiate($app);
 		Helper::instantiate($app);
 		HandlerDispatcher::instantiate($app);
 	}
