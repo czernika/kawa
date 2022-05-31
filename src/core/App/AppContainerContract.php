@@ -51,4 +51,22 @@ interface AppContainerContract
 	 * @return mixed
 	 */
 	public function call(callable|array $callable, array $params = []) : mixed;
+
+	/**
+	 * Add new singleton instance
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 * @return void
+	 */
+	public function singleton(string $key, $value) : void;
+
+	/**
+	 * Add new binding instance
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 * @return void
+	 */
+	public function bind(string $key, $value) : void;
 }

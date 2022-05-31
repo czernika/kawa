@@ -8,6 +8,7 @@ use DI\Container;
 use DI\NotFoundException;
 use Dummy\Dummy;
 use Kawa\App\App;
+use Kawa\App\Exceptions\AppContainerException;
 use PHPUnit\Framework\TestCase;
 
 class AppContainerTest extends TestCase
@@ -71,5 +72,33 @@ class AppContainerTest extends TestCase
 	{
 		$this->expectException(NotFoundException::class);
 		$this->app->get('foo');
+	}
+
+	/** @group app-container */
+    public function test_app_container_singletons_are_the_same_object_no_matter_the_getter()
+	{
+		$this->app->singleton('foo', \DI\create(Dummy::class));
+		$get = $this->app->get('foo');
+		$make = $this->app->make('foo');
+		$this->assertSame($get, $make);
+	}
+
+	/** @group app-container */
+    public function test_app_container_bindings_are_not_the_same_object_no_matter_the_getter()
+	{
+		$this->app->bind('foo', \DI\create(Dummy::class));
+		$get = $this->app->get('foo');
+		$make = $this->app->make('foo');
+		$this->assertNotSame($get, $make);
+	}
+
+	/** @group app-container */
+    public function test_app_container_cannot_set_two_identical_keys()
+	{
+		$this->app->set('foo', 'bar');
+		$this->assertTrue($this->app->has('foo'));
+
+		$this->expectException(AppContainerException::class);
+		$this->app->set('foo', 'another');
 	}
 }
