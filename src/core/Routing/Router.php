@@ -31,7 +31,7 @@ class Router
 	 *
 	 * @var array
 	 */
-	private $group = [];
+	private array $attributes = [];
 
 	public function __construct(private Request $request)
 	{
@@ -51,7 +51,7 @@ class Router
 			$attributes = ['prefix' => $attributes];
 		}
 
-		$this->group = $attributes;
+		$this->attributes = $attributes;
 
 		if (is_string($handler) && file_exists($handler)) {
 			require_once $handler;
@@ -343,7 +343,7 @@ class Router
 	 */
 	protected function createWordPressRoute(callable|array $handler, array $params = []) : static
 	{
-		$this->currentRoute = (new WordPressTagRoute($this->group))
+		$this->currentRoute = (new WordPressTagRoute($this->attributes))
 					->setMethod('GET')
 					->setHandler($handler)
 					->setCondition($params);
@@ -359,16 +359,14 @@ class Router
 	 * @param string|array $methods
 	 * @param string $uri
 	 * @param callable|array|string $handler
-	 * @return static
+	 * @return void
 	 */
-	public function methods(string|array $methods, string $uri, callable|array|string $handler) : static
+	public function methods(string|array $methods, string $uri, callable|array|string $handler) : void
 	{
 		$methods = HandlerDispatcher::methods($methods);
 		foreach ($methods as $method) {
 			$this->createUriRoute($method, $uri, $handler);
 		}
-
-		return $this;
 	}
 
 	/**
@@ -380,7 +378,7 @@ class Router
 	 */
 	public function get(string $uri, callable|array|string $handler) : static
 	{
-		return $this->methods('GET', $uri, $handler);
+		return $this->createUriRoute('GET', $uri, $handler);
 	}
 
 	/**
@@ -392,7 +390,7 @@ class Router
 	 */
 	public function post(string $uri, callable|array|string $handler) : static
 	{
-		return $this->methods('POST', $uri, $handler);
+		return $this->createUriRoute('POST', $uri, $handler);
 	}
 
 	/**
@@ -404,7 +402,7 @@ class Router
 	 */
 	public function put(string $uri, callable|array|string $handler) : static
 	{
-		return $this->methods('PUT', $uri, $handler);
+		return $this->createUriRoute('PUT', $uri, $handler);
 	}
 
 	/**
@@ -416,7 +414,7 @@ class Router
 	 */
 	public function patch(string $uri, callable|array|string $handler) : static
 	{
-		return $this->methods('PATCH', $uri, $handler);
+		return $this->createUriRoute('PATCH', $uri, $handler);
 	}
 
 	/**
@@ -428,7 +426,7 @@ class Router
 	 */
 	public function delete(string $uri, callable|array|string $handler) : static
 	{
-		return $this->methods('DELETE', $uri, $handler);
+		return $this->createUriRoute('DELETE', $uri, $handler);
 	}
 
 	/**
@@ -440,7 +438,7 @@ class Router
 	 */
 	public function options(string $uri, callable|array|string $handler) : static
 	{
-		return $this->methods('OPTIONS', $uri, $handler);
+		return $this->createUriRoute('OPTIONS', $uri, $handler);
 	}
 
 	/**
@@ -469,7 +467,7 @@ class Router
 	 */
 	protected function createUriRoute(string $method, string $uri, callable|array|string $handler) : static
 	{
-		$this->currentRoute = (new UriRoute($this->group))
+		$this->currentRoute = (new UriRoute($this->attributes))
 					->setUri($uri)
 					->setCondition($this->request)
 					->setMethod($method)
