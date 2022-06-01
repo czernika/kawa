@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Unit\Routing;
 
 use Kawa\Foundation\Request;
+use Kawa\Routing\MatchesCondition\UriCondition;
 use Kawa\Routing\Router;
 use Kawa\Routing\UriRoute;
 use PHPUnit\Framework\TestCase;
@@ -50,5 +51,36 @@ class UriRouteTest extends TestCase
 		$route = $this->router->routes('GET')[0];
 
 		$this->assertTrue($route->isSatisfied());
+	}
+
+	/** @group uri-route */
+	public function test_uri_route_may_register_custom_regex()
+	{
+		$this->router->get('/foo/:custom', fn() => 'bar')->where([':custom' => 'bar']);
+
+		/** @var UriRoute */
+		$route = $this->router->routes('GET')[0];
+
+		/** @var UriCondition */
+		$condition = $route->getCondition();
+		$patterns = $condition->getPatterns();
+
+		$this->assertTrue(array_key_exists(':custom', $patterns));
+		$this->assertSame('bar', $patterns[':custom']);
+	}
+
+	/** @group uri-route */
+	public function test_uri_route_custom_regex_rewrites_base_one()
+	{
+		$this->router->get('/foo/:id', fn() => 'bar')->where([':id' => 'bar']);
+
+		/** @var UriRoute */
+		$route = $this->router->routes('GET')[0];
+
+		/** @var UriCondition */
+		$condition = $route->getCondition();
+		$patterns = $condition->getPatterns();
+
+		$this->assertSame('bar', $patterns[':id']);
 	}
 }

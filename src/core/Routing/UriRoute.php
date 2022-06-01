@@ -32,6 +32,16 @@ class UriRoute extends Route implements HasUriContract
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function where(array $regex) : void
+	{
+		/** @var UriCondition */
+		$condition = $this->getCondition();
+		$condition->addPattern($regex);
+	}
+
+	/**
 	 * Set Uri condition
 	 *
 	 * @param Request $request

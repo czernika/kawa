@@ -23,4 +23,12 @@ interface HasUriContract
 	 * @return string
 	 */
 	public function getUri() : string;
+
+	/**
+	 * Add custom regex pattern for current route
+	 *
+	 * @param array $regex
+	 * @return void
+	 */
+	public function where(array $regex) : void;
 }

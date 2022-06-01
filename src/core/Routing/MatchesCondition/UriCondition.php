@@ -59,6 +59,17 @@ class UriCondition implements ConditionInterface
 	}
 
 	/**
+	 * Merge app regex pattern with user's one
+	 *
+	 * @param array $pattern
+	 * @return void
+	 */
+	public function addPattern(array $pattern) : void
+	{
+		$this->patterns = array_merge($this->patterns, $pattern);
+	}
+
+	/**
 	 * Get regex patterns
 	 *
 	 * @return array

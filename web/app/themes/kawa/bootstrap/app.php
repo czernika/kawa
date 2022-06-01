@@ -35,11 +35,25 @@ $container = new Container();
  */
 $app = new App($container);
 
-$app->set(
-	EngineContract::class,
-	\Kawa\View\Engines\Latte::class,
-);
+/**
+ * -------------------------------------------------------------------------
+ * Choose template engine to work with
+ * -------------------------------------------------------------------------
+ *
+ * You may use native WordPress request-response lifecycle,
+ * or use one of these supported template engine - "latte", "blade" or "twig"
+ *
+ * Default: "latte"
+ */
+$app->set(EngineContract::class, 'latte');
 
+/**
+ * -------------------------------------------------------------------------
+ * Bind some values into container
+ * -------------------------------------------------------------------------
+ *
+ * This bindings should be resolved early
+ */
 $app->factory(
 	Request::class,
 	[Request::class, 'createFromGlobals'],

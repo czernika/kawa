@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Unit\Routing;
 
 use Kawa\Foundation\Request;
+use Kawa\Routing\Exceptions\InvalidRouteMethodException;
 use Kawa\Routing\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -116,5 +117,15 @@ class RouterTest extends TestCase
 		$route = $this->router->routes()[0];
 
 		$this->assertSame($verb, $route->getMethod());
+	}
+
+	/** @group router */
+	public function test_router_only_uri_routes_has_where_method()
+	{
+		// no exception was thrown
+		$this->router->get('/foo/:bar', fn() => 'foo')->where([':bar' => 'foo']);
+
+		$this->expectException(InvalidRouteMethodException::class);
+		$this->router->isFrontPage(fn() => 'foo')->where([':bar' => 'foo']);
 	}
 }

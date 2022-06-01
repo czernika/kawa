@@ -7,6 +7,7 @@ namespace Kawa\Routing;
 use Closure;
 use Illuminate\Support\Collection;
 use Kawa\Foundation\Request;
+use Kawa\Routing\Exceptions\InvalidRouteMethodException;
 
 class Router
 {
@@ -17,6 +18,13 @@ class Router
 	 * @var RoutesCollection
 	 */
 	private RoutesCollection $collection;
+
+	/**
+	 * Current route we're working on
+	 *
+	 * @var RouteInterface
+	 */
+	private RouteInterface $currentRoute;
 
 	/**
 	 * Routes group attributes
@@ -335,12 +343,12 @@ class Router
 	 */
 	protected function createWordPressRoute(callable|array $handler, array $params = []) : static
 	{
-		$route = (new WordPressTagRoute($this->group))
+		$this->currentRoute = (new WordPressTagRoute($this->group))
 					->setMethod('GET')
 					->setHandler($handler)
 					->setCondition($params);
 
-		$this->collection->addRoute($route);
+		$this->setCurrentRoute();
 
 		return $this;
 	}
@@ -372,7 +380,7 @@ class Router
 	 */
 	public function get(string $uri, callable|array|string $handler) : static
 	{
-		return $this->methods('GET|HEAD', $uri, $handler);
+		return $this->methods('GET', $uri, $handler);
 	}
 
 	/**
@@ -436,6 +444,22 @@ class Router
 	}
 
 	/**
+	 * Add custom regex pattern to a route
+	 *
+	 * @param array $regex
+	 * @throws InvalidRouteMethodException if current route type is invalid
+	 * @return void
+	 */
+	public function where(array $regex)
+	{
+		if (!$this->currentRoute instanceof UriRoute) {
+			throw new InvalidRouteMethodException(sprintf('`where()` method supported only by `Kawa\Routing\UriRoute`, %s given', get_class($this->currentRoute)));
+		}
+
+		return $this->currentRoute->where($regex);
+	}
+
+	/**
 	 * Create simple uri route
 	 *
 	 * @param string $method
@@ -445,15 +469,25 @@ class Router
 	 */
 	protected function createUriRoute(string $method, string $uri, callable|array|string $handler) : static
 	{
-		$route = (new UriRoute($this->group))
+		$this->currentRoute = (new UriRoute($this->group))
 					->setUri($uri)
 					->setCondition($this->request)
 					->setMethod($method)
 					->setHandler($handler);
 
-		$this->collection->addRoute($route);
+		$this->setCurrentRoute();
 
 		return $this;
+	}
+
+	/**
+	 * Add route into collection
+	 *
+	 * @return void
+	 */
+	protected function setCurrentRoute() : void
+	{
+		$this->collection->addRoute($this->currentRoute);
 	}
 
 	/**

@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Kawa\Support\Facades;
 
+use Kawa\Routing\Router;
+
 /**
  * @method static void group(string|array $attributes, string|Closure $handler)
  * @method static \Kawa\Routing\Router isFrontPage(callable|array $handler)
@@ -34,13 +36,13 @@ namespace Kawa\Support\Facades;
  * @method static \Kawa\Routing\Router isYear(callable|array $handler)
  * @method static \Illuminate\Support\Collection collection()
  * @method static array routes(string $method)
- * @method static \Kawa\Routing\Router methods(string|array $methods, string $uri, callable|array|string $handler)
- * @method static \Kawa\Routing\Router get(string $uri, callable|array|string $handler)
- * @method static \Kawa\Routing\Router post(string $uri, callable|array|string $handler)
- * @method static \Kawa\Routing\Router put(string $uri, callable|array|string $handler)
- * @method static \Kawa\Routing\Router patch(string $uri, callable|array|string $handler)
- * @method static \Kawa\Routing\Router delete(string $uri, callable|array|string $handler)
- * @method static \Kawa\Routing\Router options(string $uri, callable|array|string $handler)
+ * @method static void methods(string|array $methods, string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\UriRoute get(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\UriRoute post(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\UriRoute put(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\UriRoute patch(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\UriRoute delete(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\UriRoute options(string $uri, callable|array|string $handler)
  */
 class Route extends Facade
 {
@@ -50,6 +52,6 @@ class Route extends Facade
 	 */
 	protected static function getAccessor() : string
 	{
-		return 'router';
+		return Router::class;
 	}
 }

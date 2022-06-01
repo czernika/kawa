@@ -18,7 +18,7 @@ Developer-friendly framework for WordPress theme development with latte template
 
 - [x] Conditional tag routes
 - [x] GET|POST|PATCH|PUT|DELETE|OPTIONS routes
-- [ ] Regex routes with custom patterns
+- [x] Regex routes with custom patterns
 - [ ] Query filter for custom routes
 - [ ] Redirect routes
 - [ ] View routes
@@ -40,6 +40,14 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] Request Validator
 - [ ] Controller validator
 - [ ] Bind request into routes
+
+### Response
+
+- [x] View Response
+- [ ] Output Response
+- [ ] Exception Response
+- [ ] Redirect Response
+- [ ] JSON Response
 
 ### Models
 
