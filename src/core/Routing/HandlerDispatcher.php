@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kawa\Routing;
 
+use Illuminate\Support\Arr;
 use Kawa\App\App;
 
 class HandlerDispatcher
@@ -42,5 +43,20 @@ class HandlerDispatcher
 		}
 
 		return $handler;
+	}
+
+	/**
+	 * Dispatch methods
+	 *
+	 * @param string|array $methods
+	 * @return array
+	 */
+	public static function methods(string|array $methods) : array
+	{
+		if (is_string($methods) && preg_match('/\|/', $methods)) {
+			$methods = explode('|', $methods);
+		}
+
+		return Arr::wrap($methods);
 	}
 }

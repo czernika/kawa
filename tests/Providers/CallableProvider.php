@@ -74,4 +74,21 @@ class CallableProvider
 			['isYear', ['is_year']],
 		];
 	}
+
+	/**
+	 * Get list of uri callables and its verbs
+	 *
+	 * @return array
+	 */
+	public function getUriCallables() : array
+	{
+		return [
+			['get', 'GET'],
+			['post', 'POST'],
+			['put', 'PUT'],
+			['patch', 'PATCH'],
+			['options', 'OPTIONS'],
+			['delete', 'DELETE'],
+		];
+	}
 }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Kawa\Routing;
 
 use Closure;
+use Illuminate\Support\Collection;
+use Kawa\Foundation\Request;
 
 class Router
 {
@@ -14,16 +16,16 @@ class Router
 	 *
 	 * @var RoutesCollection
 	 */
-	protected RoutesCollection $collection;
+	private RoutesCollection $collection;
 
 	/**
 	 * Routes group attributes
 	 *
 	 * @var array
 	 */
-	protected $group = [];
+	private $group = [];
 
-	public function __construct()
+	public function __construct(private Request $request)
 	{
 		$this->collection = new RoutesCollection();
 	}
@@ -332,22 +334,134 @@ class Router
 	}
 
 	/**
-	 * Get routes collection
+	 * Create URI route which supports multiple HTTP-verbs for same uri
 	 *
-	 * @return RoutesCollection
+	 * @param string|array $methods
+	 * @param string $uri
+	 * @param callable|array|string $handler
+	 * @return static
 	 */
-	public function collection() : RoutesCollection
+	public function methods(string|array $methods, string $uri, callable|array|string $handler) : static
 	{
-		return $this->collection;
+		$methods = HandlerDispatcher::methods($methods);
+		foreach ($methods as $method) {
+			$this->createUriRoute($method, $uri, $handler);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Create GET route
+	 *
+	 * @param string $uri
+	 * @param callable|array|string $handler
+	 * @return static
+	 */
+	public function get(string $uri, callable|array|string $handler) : static
+	{
+		return $this->methods('GET|HEAD', $uri, $handler);
+	}
+
+	/**
+	 * Create POST route
+	 *
+	 * @param string $uri
+	 * @param callable|array|string $handler
+	 * @return static
+	 */
+	public function post(string $uri, callable|array|string $handler) : static
+	{
+		return $this->methods('POST', $uri, $handler);
+	}
+
+	/**
+	 * Create PUT route
+	 *
+	 * @param string $uri
+	 * @param callable|array|string $handler
+	 * @return static
+	 */
+	public function put(string $uri, callable|array|string $handler) : static
+	{
+		return $this->methods('PUT', $uri, $handler);
+	}
+
+	/**
+	 * Create PATCH route
+	 *
+	 * @param string $uri
+	 * @param callable|array|string $handler
+	 * @return static
+	 */
+	public function patch(string $uri, callable|array|string $handler) : static
+	{
+		return $this->methods('PATCH', $uri, $handler);
+	}
+
+	/**
+	 * Create DELETE route
+	 *
+	 * @param string $uri
+	 * @param callable|array|string $handler
+	 * @return static
+	 */
+	public function delete(string $uri, callable|array|string $handler) : static
+	{
+		return $this->methods('DELETE', $uri, $handler);
+	}
+
+	/**
+	 * Create OPTIONS route
+	 *
+	 * @param string $uri
+	 * @param callable|array|string $handler
+	 * @return static
+	 */
+	public function options(string $uri, callable|array|string $handler) : static
+	{
+		return $this->methods('OPTIONS', $uri, $handler);
+	}
+
+	/**
+	 * Create simple uri route
+	 *
+	 * @param string $method
+	 * @param string $uri
+	 * @param callable|array|string $handler
+	 * @return static
+	 */
+	protected function createUriRoute(string $method, string $uri, callable|array|string $handler) : static
+	{
+		$route = (new UriRoute($this->group))
+					->setUri($uri)
+					->setCondition($this->request)
+					->setMethod($method)
+					->setHandler($handler);
+
+		$this->collection->addRoute($route);
+
+		return $this;
+	}
+
+	/**
+	 * Get routes as collection
+	 *
+	 * @param string|null $method
+	 * @return Collection
+	 */
+	public function collection(?string $method = null) : Collection
+	{
+		return collect($this->routes($method));
 	}
 
 	/**
 	 * Get all app routes
 	 *
-	 * @param string $method
+	 * @param string|null $method
 	 * @return array
 	 */
-	public function routes(string $method) : array
+	public function routes(?string $method = null) : array
 	{
 		return $this->collection->getRoutes($method);
 	}

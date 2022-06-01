@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unit\Routing;
 
+use Kawa\Foundation\Request;
 use Kawa\Routing\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +15,8 @@ class RouterTest extends TestCase
 
     protected function setUp(): void
 	{
-		$this->router = new Router();
+		$requestMock = $this->createMock(Request::class);
+		$this->router = new Router($requestMock);
 	}
 
 	/** @group router */
@@ -61,5 +63,58 @@ class RouterTest extends TestCase
 		$condition = $route->getCondition();
 
 		$this->assertSame($params, $condition->getParameters());
+	}
+
+	/**
+	 * @group router
+	 * @dataProvider \Providers\HttpVerbsProvider::getVerbs
+	 */
+	public function test_router_uri_methods_has_correct_http_verbs($verbs)
+	{
+		$this->router->methods($verbs, '/foo', fn() => 'foo');
+
+		/** @var Route */
+		$route = $this->router->routes('GET')[0];
+		$method = $route->getMethod();
+
+		$this->assertSame('GET', $method);
+	}
+
+	/**
+	 * @group router
+	 * @dataProvider \Providers\HttpVerbsProvider::getMultipleVerbs
+	 */
+	public function test_router_uri_methods_may_create_multiple_routes($verbs)
+	{
+		$this->router->group(['foo' => 'bar'], function () use ($verbs) {
+			$this->router->methods($verbs, '/foo', fn() => 'foo');
+
+		});
+
+		/** @var Route */
+		$getRoute = $this->router->routes('GET')[0];
+		$getRouteMethod = $getRoute->getMethod();
+		$this->assertSame('GET', $getRouteMethod);
+		$this->assertSame('bar', $getRoute->getAttribute('foo'));
+
+		/** @var Route */
+		$postRoute = $this->router->routes('POST')[0];
+		$postRouteMethod = $postRoute->getMethod();
+		$this->assertSame('POST', $postRouteMethod);
+		$this->assertSame('bar', $postRoute->getAttribute('foo'));
+	}
+
+	/**
+	 * @group router
+	 * @dataProvider \Providers\CallableProvider::getUriCallables
+	 */
+	public function test_router_uri_methods_has_correct_methods($method, $verb)
+	{
+		$this->router->$method('/foo', fn() => 'foo');
+
+		/** @var UriRoute */
+		$route = $this->router->routes()[0];
+
+		$this->assertSame($verb, $route->getMethod());
 	}
 }

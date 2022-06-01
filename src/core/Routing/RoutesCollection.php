@@ -20,6 +20,13 @@ class RoutesCollection implements Countable
 	protected array $routes = [];
 
 	/**
+	 * Unsorted list of all app routes
+	 *
+	 * @var array
+	 */
+	protected array $allRoutes = [];
+
+	/**
 	 * Count routes
 	 *
 	 * @return integer
@@ -39,10 +46,11 @@ class RoutesCollection implements Countable
 	{
 		$method = $route->getMethod();
 		$this->routes[$method][] = $route;
+		$this->allRoutes[] = $route;
 	}
 
 	/**
-	 * Get routes
+	 * Get routes method-group or whole routes array
 	 *
 	 * @param string|null $method
 	 * @return array
@@ -53,6 +61,6 @@ class RoutesCollection implements Countable
 			return $this->routes[$method];
 		}
 
-		return $this->routes;
+		return $this->allRoutes;
 	}
 }
