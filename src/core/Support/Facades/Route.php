@@ -32,8 +32,15 @@ namespace Kawa\Support\Facades;
  * @method static \Kawa\Routing\Router isTax(callable|array $handler, string|array $tax = '')
  * @method static \Kawa\Routing\Router isTime(callable|array $handler)
  * @method static \Kawa\Routing\Router isYear(callable|array $handler)
- * @method static \Kawa\Routing\RoutesCollection collection()
+ * @method static \Illuminate\Support\Collection collection()
  * @method static array routes(string $method)
+ * @method static \Kawa\Routing\Router methods(string|array $methods, string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\Router get(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\Router post(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\Router put(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\Router patch(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\Router delete(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\Router options(string $uri, callable|array|string $handler)
  */
 class Route extends Facade
 {

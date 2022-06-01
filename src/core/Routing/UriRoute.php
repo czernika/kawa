@@ -8,16 +8,14 @@ declare(strict_types=1);
 namespace Kawa\Routing;
 
 use Kawa\Foundation\Request;
+use Kawa\Routing\Contracts\HasUriContract;
 use Kawa\Routing\MatchesCondition\UriCondition;
 
-class UriRoute extends Route
+class UriRoute extends Route implements HasUriContract
 {
 
 	/**
-	 * Set route uri
-	 *
-	 * @param string $uri
-	 * @return static
+	 * @inheritDoc
 	 */
 	public function setUri(string $uri) : static
 	{
@@ -26,9 +24,7 @@ class UriRoute extends Route
 	}
 
 	/**
-	 * Get route prefixed uri
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
 	public function getUri() : string
 	{

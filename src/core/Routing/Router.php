@@ -471,7 +471,7 @@ class Router
 	 * Get all app routes
 	 *
 	 * @param string|null $method
-	 * @return array
+	 * @return array<Route>
 	 */
 	public function routes(?string $method = null) : array
 	{

@@ -122,4 +122,12 @@ class AppContainer implements AppContainerContract
 		$this->bindings[] = $key;
 		$this->set($key, $value);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function factory(string $key, callable $factory) : mixed
+	{
+		return $this->set($key, \DI\factory($factory));
+	}
 }

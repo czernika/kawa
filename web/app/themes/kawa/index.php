@@ -13,6 +13,6 @@
 
 use Kawa\Foundation\Request;
 
-$request = Request::createFromGlobals();
+$request = app(Request::class);
 
 do_action('kawa/response', $request);

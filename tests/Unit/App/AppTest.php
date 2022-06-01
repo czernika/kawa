@@ -57,7 +57,7 @@ class AppTest extends TestCase
 		$this->app->singleton(
 			KernelInterface::class,
 			\DI\create(Kernel::class)
-				->constructor(\DI\get(Router::class)),
+				->constructor($this->container, \DI\get(Router::class)),
 		);
 
 		$this->app->boot();

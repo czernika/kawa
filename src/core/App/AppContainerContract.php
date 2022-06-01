@@ -71,4 +71,13 @@ interface AppContainerContract
 	 * @return void
 	 */
 	public function bind(string $key, $value) : void;
+
+	/**
+	 * Bind factory into container
+	 *
+	 * @param string $key
+	 * @param callable $factory
+	 * @return mixed
+	 */
+	public function factory(string $key, callable $factory) : mixed;
 }

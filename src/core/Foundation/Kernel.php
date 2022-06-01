@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace Kawa\Foundation;
 
+use DI\Container;
+use Kawa\Routing\Exceptions\RouteNotFoundException;
+use Kawa\Routing\Route;
 use Kawa\Routing\Router;
-use Kawa\Support\Facades\Route;
 
 class Kernel implements KernelInterface
 {
@@ -22,7 +24,7 @@ class Kernel implements KernelInterface
 	 */
 	protected array $providers = [];
 
-	public function __construct(protected Router $router)
+	public function __construct(protected Container $container, protected Router $router)
 	{
 
 	}
@@ -32,8 +34,36 @@ class Kernel implements KernelInterface
 	 */
 	public function handle(Request $request) : void
 	{
+		// TODO for now let it be here, resolve later
+		require_once get_template_directory() . '/routes/web.php';
 
-		echo 'Happy End!';
+		try {
+			$route = $this->getSatisfiedRoute($request);
+			$response = $this->dispatch($route, $request);
+		} catch (RouteNotFoundException $e) {
+			// Handle 404
+			$response = '404!';
+		}
+
+		echo $response;
+	}
+
+	/**
+	 * Dispatch route and return Response instance
+	 *
+	 * @param Route $route
+	 * @param Request $request
+	 * @return void
+	 */
+	protected function dispatch(Route $route, Request $request)
+	{
+		$handler = $route->getHandler();
+
+		// Handle middleware here
+
+		$content = $this->container->call($handler);
+
+		return $content;
 	}
 
 	/**
@@ -42,5 +72,24 @@ class Kernel implements KernelInterface
 	public function getProviders() : array
 	{
 		return $this->providers;
+	}
+
+	/**
+	 * Get satisfied route according to request
+	 *
+	 * @param Request $request
+	 * @throws RouteNotFoundException no route was satisfied
+	 * @return Route
+	 */
+	public function getSatisfiedRoute(Request $request) : Route
+	{
+		$routes = $this->router->routes($request->getMethod());
+		foreach ($routes as $route) {
+			if ($route->isSatisfied()) {
+				return $route;
+			}
+		}
+
+		throw new RouteNotFoundException();
 	}
 }

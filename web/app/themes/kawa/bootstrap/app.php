@@ -9,6 +9,7 @@
 use DI\Container;
 use Kawa\App\App;
 use Kawa\Foundation\KernelInterface;
+use Kawa\Foundation\Request;
 use Kawa\Routing\Router;
 use Theme\Http\Kernel;
 
@@ -29,14 +30,19 @@ $container = new Container();
  *
  * This will instantiate app service container
  *
- * Also we need to define KernelInterface object
+ * Also we need to define crucial services
  */
 $app = new App($container);
+
+$app->factory(
+	Request::class,
+	[Request::class, 'createFromGlobals'],
+);
 
 $app->singleton(
 	KernelInterface::class,
 	\DI\create(Kernel::class)
-		->constructor(\DI\get(Router::class))
+		->constructor($container, \DI\get(Router::class))
 );
 
 /**
