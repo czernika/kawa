@@ -315,6 +315,18 @@ class Router
 	}
 
 	/**
+	 * Any WordPress conditional tag route
+	 *
+	 * @param string|array $condition
+	 * @param callable|array $handler
+	 * @return static
+	 */
+	public function condition(string|array $condition, callable|array $handler) : static
+	{
+		return $this->createWordPressRoute($handler, $condition);
+	}
+
+	/**
 	 * Create WordPresTagRoute
 	 *
 	 * @param callable|array $callable

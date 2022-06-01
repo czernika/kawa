@@ -19,6 +19,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [x] Conditional tag routes
 - [x] GET|POST|PATCH|PUT|DELETE|OPTIONS routes
 - [ ] Regex routes with custom patterns
+- [ ] Query filter for custom routes
 - [ ] Redirect routes
 - [ ] View routes
 - [ ] Named routes
@@ -83,7 +84,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] Mailable
 - [ ] Notifiers
 
-### Http API adn GraphQL
+### API and GraphQL
 
 - [ ] API routes
 - [ ] Http API
@@ -110,6 +111,6 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] Listeners
 - [ ] Jobs
 
-### PLugins
+### Plugins
 
 - [ ] WooCommerce
