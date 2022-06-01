@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace Kawa\Support;
 
 use Kawa\App\App;
+use Kawa\Foundation\Response;
+use Kawa\View\ViewFactory;
 
 class Helper
 {
@@ -41,5 +43,21 @@ class Helper
 		}
 
 		return self::$app;
+	}
+
+	/**
+	 * Render view response
+	 *
+	 * @param string $template
+	 * @param array $context
+	 * @param string|null $block
+	 * @return string
+	 */
+	public static function viewResponse(string $template, array $context = [], ?string $block = null) : string
+	{
+		/** @var ViewFactory */
+		$factory = self::$app->get(ViewFactory::class);
+
+		return $factory->render($template, $context, $block);
 	}
 }

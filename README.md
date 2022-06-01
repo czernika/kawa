@@ -70,13 +70,17 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] SVG icons and spritemap
 - [ ] Images optimization
 - [ ] Localization
-- [ ] View templates (Latte, Twig, Blade)
+- [x] Latte template engine
+- [ ] Twig template engine
+- [ ] Blade template engine
 - [ ] Menus
 - [ ] Pagination
 - [ ] Customizer sections (Kirki Framework)
 - [ ] Theme mods
 - [ ] Gutenberg block (Carbon Fields)
 - [ ] Global context (view composers)
+- [ ] Custom Templates
+- [ ] Shortcode
 
 ### Mailing
 
@@ -111,6 +115,10 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] Listeners
 - [ ] Jobs
 
-### Plugins
+### Plugins and core
 
 - [ ] WooCommerce
+- [ ] Multisite
+- [ ] Block theme
+
+Child themes will **NOT** be tested as it is not the purpose of this framework. Theme will be created by developer itself

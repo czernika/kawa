@@ -11,6 +11,7 @@ use Kawa\App\App;
 use Kawa\Foundation\KernelInterface;
 use Kawa\Foundation\Request;
 use Kawa\Routing\Router;
+use Kawa\View\Engines\EngineContract;
 use Theme\Http\Kernel;
 
 /**
@@ -33,6 +34,11 @@ $container = new Container();
  * Also we need to define crucial services
  */
 $app = new App($container);
+
+$app->set(
+	EngineContract::class,
+	\Kawa\View\Engines\Latte::class,
+);
 
 $app->factory(
 	Request::class,

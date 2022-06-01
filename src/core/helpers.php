@@ -104,3 +104,17 @@ if (!function_exists('app')) {
 		return Helper::app($key);
 	}
 }
+
+/**
+ * -------------------------------------------------------------------------
+ * Response
+ * -------------------------------------------------------------------------
+ */
+if (!function_exists('view')) {
+
+
+	function view(string $template, array $context = [])
+	{
+		return Helper::viewResponse($template, $context);
+	}
+}

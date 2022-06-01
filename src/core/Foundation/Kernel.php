@@ -13,6 +13,7 @@ use DI\Container;
 use Kawa\Routing\Exceptions\RouteNotFoundException;
 use Kawa\Routing\Route;
 use Kawa\Routing\Router;
+use Kawa\View\ResponseService;
 
 class Kernel implements KernelInterface
 {
@@ -24,9 +25,12 @@ class Kernel implements KernelInterface
 	 */
 	protected array $providers = [];
 
+	/** @var ResponseService */
+	protected ResponseService $responseService;
+
 	public function __construct(protected Container $container, protected Router $router)
 	{
-
+		$this->responseService = new ResponseService();
 	}
 
 	/**
@@ -41,11 +45,11 @@ class Kernel implements KernelInterface
 			$route = $this->getSatisfiedRoute($request);
 			$response = $this->dispatch($route, $request);
 		} catch (RouteNotFoundException $e) {
-			// Handle 404
-			$response = '404!';
+			// Handle 404 or middleware exceptions
+			$response = $this->responseService->toResponse($request, view('errors.404', ['message' => $e->getMessage()]));
 		}
 
-		echo $response;
+		echo $response->getContent($response);
 	}
 
 	/**
@@ -53,17 +57,18 @@ class Kernel implements KernelInterface
 	 *
 	 * @param Route $route
 	 * @param Request $request
-	 * @return void
+	 * @return Response
 	 */
-	protected function dispatch(Route $route, Request $request)
+	protected function dispatch(Route $route, Request $request) : Response
 	{
 		$handler = $route->getHandler();
 
 		// Handle middleware here
 
 		$content = $this->container->call($handler);
+		$response = $this->responseService->toResponse($request, $content);
 
-		return $content;
+		return $response;
 	}
 
 	/**

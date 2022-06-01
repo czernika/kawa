@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Kawa\Foundation;
 
+use Kawa\Routing\Exceptions\RouteNotFoundException;
+use Kawa\Routing\Route;
+
 interface KernelInterface
 {
 
@@ -21,4 +24,13 @@ interface KernelInterface
 	 * @return array
 	 */
 	public function getProviders() : array;
+
+	/**
+	 * Get satisfied route according to request
+	 *
+	 * @param Request $request
+	 * @throws RouteNotFoundException no route was satisfied
+	 * @return Route
+	 */
+	public function getSatisfiedRoute(Request $request) : Route;
 }
