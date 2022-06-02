@@ -9,13 +9,14 @@ declare(strict_types=1);
 
 namespace Kawa\Foundation;
 
+use Closure;
 use DI\Container;
 use Kawa\Routing\Exceptions\RouteNotFoundException;
 use Kawa\Routing\Route;
 use Kawa\Routing\Router;
 use Kawa\View\ResponseService;
 
-class Kernel implements KernelInterface
+abstract class Kernel implements KernelInterface
 {
 
 	/**
@@ -28,28 +29,31 @@ class Kernel implements KernelInterface
 	/** @var ResponseService */
 	protected ResponseService $responseService;
 
-	public function __construct(protected Container $container, protected Router $router)
-	{
-		$this->responseService = new ResponseService();
-	}
+	public function __construct(
+		protected Container $container,
+		protected Router $router,
+	) {}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function handle(Request $request) : void
 	{
-		// TODO for now let it be here, resolve later
-		require_once get_template_directory() . '/routes/web.php';
+		$resolver = $this->routes();
+		$resolver($this->router);
 
 		try {
 			$route = $this->getSatisfiedRoute($request);
 			$response = $this->dispatch($route, $request);
 		} catch (RouteNotFoundException $e) {
 			// Handle 404 or middleware exceptions
-			$response = $this->responseService->toResponse($request, view('errors.404', ['message' => $e->getMessage()]));
 		}
 
-		echo $response->getContent($response);
+		if (!headers_sent()) {
+			$response->sendHeaders();
+		}
+
+		echo $response->getContent();
 	}
 
 	/**
@@ -65,8 +69,7 @@ class Kernel implements KernelInterface
 
 		// Handle middleware here
 
-		$content = $this->container->call($handler);
-		$response = $this->responseService->toResponse($request, $content);
+		$response = $this->container->call($handler);
 
 		return $response;
 	}
@@ -97,4 +100,11 @@ class Kernel implements KernelInterface
 
 		throw new RouteNotFoundException();
 	}
+
+	/**
+	 * Resolve web routes
+	 *
+	 * @return Closure
+	 */
+	abstract protected function routes() : Closure;
 }

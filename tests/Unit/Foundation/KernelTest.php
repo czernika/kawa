@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Unit\Foundation;
 
 use DI\Container;
-use Kawa\Foundation\Kernel;
 use Kawa\Foundation\Request;
 use Kawa\Routing\Exceptions\RouteNotFoundException;
 use Kawa\Routing\MatchesCondition\WordPressTagCondition;
@@ -13,6 +12,7 @@ use Kawa\Routing\Router;
 use Kawa\Routing\UriRoute;
 use Kawa\Routing\WordPressTagRoute;
 use PHPUnit\Framework\TestCase;
+use Theme\Http\Kernel;
 
 class KernelTest extends TestCase
 {

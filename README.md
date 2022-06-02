@@ -25,7 +25,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] View routes
 - [ ] Named routes
 - [ ] Ajax routes
-- [ ] Controllers
+- [x] Controllers
 - [ ] Correct response
 - [ ] 404 / 200 fallbacks
 

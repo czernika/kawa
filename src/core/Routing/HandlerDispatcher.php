@@ -6,6 +6,7 @@ namespace Kawa\Routing;
 
 use Illuminate\Support\Arr;
 use Kawa\App\App;
+use Kawa\Support\Str;
 
 class HandlerDispatcher
 {
@@ -28,13 +29,18 @@ class HandlerDispatcher
 	 * Dispatch route handler into callable format
 	 *
 	 * @param callable|array|string $handler
+	 * @param string|null $namespace
 	 * @return callable|array
 	 */
-    public static function dispatch(callable|array|string $handler) : callable|array
+    public static function dispatch(callable|array|string $handler, ?string $namespace = null) : callable|array
 	{
 		// It is `Controller::method` or `Controller@method`
 		if (is_string($handler) && !class_exists($handler) && preg_match('/@|::/', $handler)) {
 			$handler = preg_split('/@|::/', $handler, 2);
+
+			if ($namespace) {
+				$handler[0] = $namespace . $handler[0];
+			}
 		}
 
 		// It is invokable controller `Controller::class`

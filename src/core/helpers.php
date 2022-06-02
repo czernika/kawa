@@ -7,6 +7,7 @@
  * @package Kawa
  */
 
+use Kawa\Foundation\Response;
 use Kawa\Support\Helper;
 
 use function Env\env;
@@ -112,9 +113,16 @@ if (!function_exists('app')) {
  */
 if (!function_exists('view')) {
 
-
-	function view(string $template, array $context = [])
+	/**
+	 * Convert template into response instance
+	 *
+	 * @param string $template
+	 * @param array $context
+	 * @param mixed ...$params
+	 * @return Response
+	 */
+	function view(string $template, array $context = [], ...$params) : Response
 	{
-		return Helper::viewResponse($template, $context);
+		return Helper::viewResponse($template, $context, ...$params);
 	}
 }

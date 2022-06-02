@@ -30,6 +30,21 @@ interface RouteInterface
 	public function getHandler() : callable|array;
 
 	/**
+	 * Set route namespace
+	 *
+	 * @param callable|array|string $handler
+	 * @return static
+	 */
+    public function setNamespace(string $namespace) : static;
+
+	/**
+	 * Get route namespace
+	 *
+	 * @return string
+	 */
+	public function getNamespace() : string;
+
+	/**
 	 * Define does this route is satisfies the request
 	 *
 	 * @return boolean

@@ -50,14 +50,14 @@ class Helper
 	 *
 	 * @param string $template
 	 * @param array $context
-	 * @param string|null $block
-	 * @return string
+	 * @param mixed ...$params
+	 * @return Response
 	 */
-	public static function viewResponse(string $template, array $context = [], ?string $block = null) : string
+	public static function viewResponse(string $template, array $context = [], ...$params) : Response
 	{
 		/** @var ViewFactory */
 		$factory = self::$app->get(ViewFactory::class);
 
-		return $factory->render($template, $context, $block);
+		return $factory->render($template, $context, ...$params);
 	}
 }

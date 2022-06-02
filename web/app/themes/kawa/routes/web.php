@@ -8,4 +8,4 @@
 
 use Kawa\Support\Facades\Route;
 
-Route::isFrontPage(fn() => view('content.index'));
+Route::isFrontPage('Controller@index');

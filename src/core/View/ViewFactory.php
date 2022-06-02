@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kawa\View;
 
 use Kawa\App\App;
+use Kawa\Foundation\Response;
 use Kawa\View\Engines\EngineContract;
 
 class ViewFactory
@@ -13,7 +14,7 @@ class ViewFactory
 	/** @var EngineContract */
 	protected EngineContract $engine;
 
-	public function __construct(private App $app)
+	public function __construct(private App $app, private ResponseService $responseService)
 	{
 		$this->defineEngine();
 	}
@@ -38,12 +39,13 @@ class ViewFactory
 	 *
 	 * @param string $template
 	 * @param array $context
-	 * @param string|null $block
-	 * @return string
+	 * @param mixed ...$params
+	 * @return Response
 	 */
-	public function render(string $template, array $context = [], ?string $block = null) : string
+	public function render(string $template, array $context = [], ...$params) : Response
 	{
-		return $this->engine->render($template, $context, $block);
+		$content = $this->engine->render($template, $context, ...$params);
+		return $this->responseService->toResponse($content);
 	}
 
 	/**
@@ -51,11 +53,11 @@ class ViewFactory
 	 *
 	 * @param string $template
 	 * @param array $context
-	 * @param string|null $block
+	 * @param mixed ...$params
 	 * @return void
 	 */
-	public function output(string $template, array $context = [], ?string $block = null) : void
+	public function output(string $template, array $context = [], ...$params) : void
 	{
-		$this->engine->output($template, $context, $block);
+		$this->engine->output($template, $context, ...$params);
 	}
 }

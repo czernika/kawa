@@ -4,18 +4,25 @@ declare(strict_types=1);
 
 namespace Theme\Http;
 
+use Closure;
 use Kawa\Foundation\Kernel as FoundationKernel;
-use Theme\Providers\RoutesServiceProvider;
+use Kawa\Routing\Router;
 
 class Kernel extends FoundationKernel
 {
 
 	/**
-	 * List of theme service providers
+	 * Resolve web routes
 	 *
-	 * @var array
+	 * @return Closure
 	 */
-	protected array $providers = [
-		RoutesServiceProvider::class,
-	];
+	protected function routes() : Closure
+	{
+		return function (Router $router) {
+			$router->group(
+				['middleware' => 'web', 'namespace' => 'Theme\\Http\\Controllers'],
+				get_template_directory() . '/routes/web.php',
+			);
+		};
+	}
 }

@@ -77,7 +77,7 @@ class Router
 			if (array_key_exists($key, $this->attributes)) {
 				$value = match ($key) {
 					'prefix' => Str::start($value, '/'),
-					'namespace' => Str::finish($value, '\\'),
+					'namespace' => Str::start($value, '\\'),
 					default => $value,
 				};
 				$value = $this->attributes[$key] . $value;
@@ -92,10 +92,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for front page
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isFrontPage(callable|array $handler) : static
+    public function isFrontPage(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_front_page']);
 	}
@@ -103,10 +103,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for non existing pages
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function is404(callable|array $handler) : static
+    public function is404(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_404']);
 	}
@@ -114,10 +114,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for archive pages
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isArchive(callable|array $handler) : static
+    public function isArchive(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_archive']);
 	}
@@ -125,11 +125,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for attachments
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param int|string|int[]|string[] $attachment
 	 * @return static
 	 */
-    public function isAttachment(callable|array $handler, int|string|array $attachment = '') : static
+    public function isAttachment(callable|array|string $handler, int|string|array $attachment = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_attachment', $attachment]);
 	}
@@ -137,11 +137,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for authors archive
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param int|string|int[]|string[] $author
 	 * @return static
 	 */
-    public function isAuthor(callable|array $handler, int|string|array $author = '') : static
+    public function isAuthor(callable|array|string $handler, int|string|array $author = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_author', $author]);
 	}
@@ -149,11 +149,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for categories
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param int|string|int[]|string[] $category
 	 * @return static
 	 */
-    public function isCategory(callable|array $handler, int|string|array $category = '') : static
+    public function isCategory(callable|array|string $handler, int|string|array $category = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_category', $category]);
 	}
@@ -161,10 +161,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for date archives
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isDate(callable|array $handler) : static
+    public function isDate(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_date']);
 	}
@@ -172,10 +172,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for daily archives
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isDay(callable|array $handler) : static
+    public function isDay(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_day']);
 	}
@@ -183,10 +183,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for blog page
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isHome(callable|array $handler) : static
+    public function isHome(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_home']);
 	}
@@ -194,10 +194,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for monthly archives
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isMonth(callable|array $handler) : static
+    public function isMonth(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_month']);
 	}
@@ -205,11 +205,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for pages
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param int|string|int[]|string[] $page
 	 * @return static
 	 */
-    public function isPage(callable|array $handler, int|string|array $page = '') : static
+    public function isPage(callable|array|string $handler, int|string|array $page = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_page', $page]);
 	}
@@ -217,11 +217,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for templated pages
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param string|string[] $template
 	 * @return static
 	 */
-    public function isPageTemplate(callable|array $handler, string|array $template = '') : static
+    public function isPageTemplate(callable|array|string $handler, string|array $template = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_page_template', $template]);
 	}
@@ -229,10 +229,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for paged pages (like `/page/2`)
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isPaged(callable|array $handler) : static
+    public function isPaged(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_paged']);
 	}
@@ -240,11 +240,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for post type archive pages
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param string|string[] $post_type
 	 * @return static
 	 */
-    public function isPostTypeArchive(callable|array $handler, string|array $post_type = '') : static
+    public function isPostTypeArchive(callable|array|string $handler, string|array $post_type = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_post_type_archive', $post_type]);
 	}
@@ -252,10 +252,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for privacy policy page
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isPrivacyPolicy(callable|array $handler) : static
+    public function isPrivacyPolicy(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_privacy_policy']);
 	}
@@ -263,10 +263,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for search page
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isSearch(callable|array $handler) : static
+    public function isSearch(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_search']);
 	}
@@ -274,10 +274,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for single blog article page
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isSingle(callable|array $handler) : static
+    public function isSingle(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_single']);
 	}
@@ -285,11 +285,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for post type singular pages
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param string|string[] $post_types
 	 * @return static
 	 */
-    public function isSingular(callable|array $handler, string|array $post_types = '') : static
+    public function isSingular(callable|array|string $handler, string|array $post_types = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_singular', $post_types]);
 	}
@@ -297,10 +297,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for sticky posts
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isSticky(callable|array $handler) : static
+    public function isSticky(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_sticky']);
 	}
@@ -308,11 +308,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for tag archive pages
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param int|string|int[]|string[] $tag
 	 * @return static
 	 */
-    public function isTag(callable|array $handler, int|string|array $tag = '') : static
+    public function isTag(callable|array|string $handler, int|string|array $tag = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_tag', $tag]);
 	}
@@ -320,11 +320,11 @@ class Router
 	/**
 	 * Create WordPressTagRoute for taxonomy archive pages
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @param string|string[] $tax
 	 * @return static
 	 */
-    public function isTax(callable|array $handler, string|array $tax = '') : static
+    public function isTax(callable|array|string $handler, string|array $tax = '') : static
 	{
 		return $this->createWordPressRoute($handler, ['is_tax', $tax]);
 	}
@@ -332,10 +332,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for timed archives
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isTime(callable|array $handler) : static
+    public function isTime(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_time']);
 	}
@@ -343,10 +343,10 @@ class Router
 	/**
 	 * Create WordPressTagRoute for yearly archives
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function isYear(callable|array $handler) : static
+    public function isYear(callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, ['is_year']);
 	}
@@ -355,10 +355,10 @@ class Router
 	 * Any WordPress conditional tag route
 	 *
 	 * @param string|array $condition
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-	public function condition(string|array $condition, callable|array $handler) : static
+	public function condition(string|array $condition, callable|array|string $handler) : static
 	{
 		return $this->createWordPressRoute($handler, $condition);
 	}
@@ -366,11 +366,11 @@ class Router
 	/**
 	 * Create WordPresTagRoute
 	 *
-	 * @param callable|array $callable
+	 * @param callable|array|string $callable
 	 * @param array $params
 	 * @return static
 	 */
-	protected function createWordPressRoute(callable|array $handler, array $params = []) : static
+	protected function createWordPressRoute(callable|array|string $handler, array $params = []) : static
 	{
 		$this->currentRoute = (new WordPressTagRoute($this->attributes))
 					->setMethod('GET')
@@ -515,6 +515,17 @@ class Router
 	protected function setCurrentRoute() : void
 	{
 		$this->collection->addRoute($this->currentRoute);
+	}
+
+	/**
+	 * Set route namespace
+	 *
+	 * @param string $namespace
+	 * @return void
+	 */
+	public function namespace(string $namespace)
+	{
+		return $this->currentRoute->setNamespace($namespace);
 	}
 
 	/**

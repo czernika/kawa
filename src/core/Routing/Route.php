@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kawa\Routing;
 
 use Kawa\Routing\MatchesCondition\ConditionInterface;
+use Kawa\Support\Str;
 use Kawa\Support\Traits\HasAttributes;
 
 class Route implements RouteInterface
@@ -19,12 +20,16 @@ class Route implements RouteInterface
 	/**
 	 * Set route handler
 	 *
-	 * @param callable|array $handler
+	 * @param callable|array|string $handler
 	 * @return static
 	 */
-    public function setHandler(callable|array $handler) : static
+    public function setHandler(callable|array|string $handler) : static
 	{
-		return $this->addAttribute('handler', HandlerDispatcher::dispatch($handler));
+		$namespace = (is_string($handler) && !class_exists($handler)) ?
+						$this->getNamespace() :
+						null;
+
+		return $this->addAttribute('handler', HandlerDispatcher::dispatch($handler, $namespace));
 	}
 
 	/**
@@ -33,6 +38,22 @@ class Route implements RouteInterface
 	public function getHandler() : callable|array
 	{
 		return $this->getAttribute('handler');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+    public function setNamespace(string $namespace) : static
+	{
+		return $this->addAttribute('namespace', Str::finish($namespace, '\\'));
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getNamespace() : string
+	{
+		return Str::finish($this->getAttribute('namespace'), '\\');
 	}
 
 	/**

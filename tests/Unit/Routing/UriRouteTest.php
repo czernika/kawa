@@ -83,4 +83,50 @@ class UriRouteTest extends TestCase
 
 		$this->assertSame('bar', $patterns[':id']);
 	}
+
+	/** @group uri-route */
+	public function test_uri_route_may_set_namespace()
+	{
+		$this->router->get('/foo/:id', fn() => 'bar')->namespace('Custom');
+
+		/** @var UriRoute */
+		$route = $this->router->routes('GET')[0];
+
+		$namespace = $route->getNamespace();
+
+		$this->assertSame('Custom\\', $namespace);
+	}
+
+	/** @group uri-route */
+	public function test_uri_route_override_namespace()
+	{
+		$this->router->group(['namespace' => 'Some'], function () {
+			$this->router->get('/foo/:id', fn() => 'bar')->namespace('Custom');
+		});
+
+		/** @var UriRoute */
+		$route = $this->router->routes('GET')[0];
+
+		$namespace = $route->getNamespace();
+
+		// We expect custom namespace may override parent namespace
+		$this->assertSame('Custom\\', $namespace);
+	}
+
+	/** @group uri-route */
+	public function test_uri_route_nested_group_inherit_namespace()
+	{
+		$this->router->group(['namespace' => 'Some'], function () {
+			$this->router->group(['namespace' => 'Nested'], function () {
+				$this->router->get('/foo/:id', fn() => 'bar');
+			});
+		});
+
+		/** @var UriRoute */
+		$route = $this->router->routes('GET')[0];
+
+		$namespace = $route->getNamespace();
+
+		$this->assertSame('Some\\Nested\\', $namespace);
+	}
 }
