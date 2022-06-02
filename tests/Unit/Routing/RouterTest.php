@@ -128,4 +128,36 @@ class RouterTest extends TestCase
 		$this->expectException(InvalidRouteMethodException::class);
 		$this->router->isFrontPage(fn() => 'foo')->where([':bar' => 'foo']);
 	}
+
+	/** @group router */
+	public function test_router_nested_routes_keeps_properties()
+	{
+		$this->router->group(['prefix' => '/admin'], function () {
+			$this->router->get('/foo', fn() => 'foo');
+			$this->router->get('/bar', fn() => 'bar'); // `/admin/bar`
+
+			$this->router->group(['prefix' => 'user'], function () {
+				$this->router->get('/foo', fn() => 'foo');
+				$this->router->get('/bar', fn() => 'bar'); // `/admin/user/bar`
+
+				$this->router->group(['prefix' => 'crazy'], function () {
+					$this->router->get('/foo', fn() => 'foo');
+					$this->router->get('/bar', fn() => 'bar'); // `/admin/user/crazy/bar`
+				});
+			});
+		});
+
+		/** @var UriRoute */
+		$adminBarRoute = $this->router->routes()[1];
+
+		/** @var UriRoute */
+		$adminUserBarRoute = $this->router->routes()[3];
+
+		/** @var UriRoute */
+		$adminUserCrazyBarRoute = $this->router->routes()[5];
+
+		$this->assertSame('/admin/bar', $adminBarRoute->getUri());
+		$this->assertSame('/admin/user/bar', $adminUserBarRoute->getUri());
+		$this->assertSame('/admin/user/crazy/bar', $adminUserCrazyBarRoute->getUri());
+	}
 }

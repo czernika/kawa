@@ -8,7 +8,7 @@ Developer-friendly framework for WordPress theme development with latte template
 
 ### General
 
-- [x] Environment
+- [x] Environment based settings
 - [x] Dependency Injection Container
 - [x] Service providers
 - [x] Debugger
@@ -19,6 +19,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [x] Conditional tag routes
 - [x] GET|POST|PATCH|PUT|DELETE|OPTIONS routes
 - [x] Regex routes with custom patterns
+- [x] Group routes (nested groups included - uri, name, controller namespace)
 - [ ] Query filter for custom routes
 - [ ] Redirect routes
 - [ ] View routes

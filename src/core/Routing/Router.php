@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Support\Collection;
 use Kawa\Foundation\Request;
 use Kawa\Routing\Exceptions\InvalidRouteMethodException;
+use Kawa\Support\Str;
 
 class Router
 {
@@ -47,17 +48,45 @@ class Router
 	 */
 	public function group(string|array $attributes, string|Closure $handler) : void
 	{
-		if (is_string($attributes)) {
-			$attributes = ['prefix' => $attributes];
-		}
-
-		$this->attributes = $attributes;
+		$this->mergeAttributes($attributes);
 
 		if (is_string($handler) && file_exists($handler)) {
 			require_once $handler;
 		} else {
 			$handler();
 		}
+	}
+
+	/**
+	 * Merge group attributes
+	 *
+	 * @param string|array $attributes
+	 * @return void
+	 */
+	private function mergeAttributes(string|array $attributes) : void
+	{
+		if (is_string($attributes)) {
+			$attributes = ['prefix' => $attributes];
+		}
+
+		array_walk($attributes, function (&$value, $key) {
+			if (!in_array($key, ['prefix', 'name', 'namespace'], true)) {
+				return $value;
+			}
+
+			if (array_key_exists($key, $this->attributes)) {
+				$value = match ($key) {
+					'prefix' => Str::start($value, '/'),
+					'namespace' => Str::finish($value, '\\'),
+					default => $value,
+				};
+				$value = $this->attributes[$key] . $value;
+			}
+
+			return $value;
+		});
+
+		$this->attributes = array_merge($this->attributes, $attributes);
 	}
 
 	/**

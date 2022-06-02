@@ -9,6 +9,21 @@ namespace Kawa\Support;
 
 class Str
 {
+
+	/**
+     * Begin a string with a single instance of a given value.
+     *
+     * @param  string  $value
+     * @param  string  $prefix
+     * @return string
+     */
+    public static function start($value, $prefix)
+    {
+        $quoted = preg_quote($prefix, '/');
+
+        return $prefix.preg_replace('/^(?:'.$quoted.')+/u', '', $value);
+    }
+
     /**
      * Cap a string with a single instance of a given value.
      *
