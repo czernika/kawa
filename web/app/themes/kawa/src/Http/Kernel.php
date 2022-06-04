@@ -6,10 +6,20 @@ namespace Theme\Http;
 
 use Closure;
 use Kawa\Foundation\Kernel as FoundationKernel;
+use Kawa\Middleware\AbspathDefined;
 use Kawa\Routing\Router;
 
 class Kernel extends FoundationKernel
 {
+
+	/**
+	 * List of theme middleware
+	 *
+	 * @var array
+	 */
+	protected array $middleware = [
+		'web' => AbspathDefined::class,
+	];
 
 	/**
 	 * Resolve web routes

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Kawa\Support\Traits;
 
+use Illuminate\Support\Arr;
+
 trait HasAttributes
 {
 
@@ -48,6 +50,30 @@ trait HasAttributes
 	public function setAttributes(array $attributes) : void
 	{
 		$this->attributes = $attributes;
+	}
+
+	/**
+	 * Merge attributes into array
+	 *
+	 * @param string $key
+	 * @param array $attributes
+	 * @return static
+	 */
+	public function mergeAttributes(string $key, array $attributes) : static
+	{
+		$oldAttributes = Arr::wrap($this->getAttribute($key));
+		return $this->addAttribute($key, array_merge($oldAttributes, $attributes));
+	}
+
+	/**
+	 * Define does this attribute exists or not
+	 *
+	 * @param string $key
+	 * @return boolean
+	 */
+	public function hasAttribute(string $key) : bool
+	{
+		return null !== $this->getAttribute($key);
 	}
 
 	/**

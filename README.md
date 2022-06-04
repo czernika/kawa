@@ -4,6 +4,10 @@ Developer-friendly framework for WordPress theme development with latte template
 
 [![Build Status](https://app.travis-ci.com/czernika/kawa.svg?token=dnoAxtq1npfjzQ8rFLq7&branch=master)](https://app.travis-ci.com/czernika/kawa)
 
+## Docs
+
+[In progress](https://czernika.github.io/kawa-docs/)
+
 ## Todo
 
 ### General
@@ -26,12 +30,13 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] Named routes
 - [ ] Ajax routes
 - [x] Controllers
+- [ ] Route middleware
 - [ ] Correct response
 - [ ] 404 / 200 fallbacks
 
 ### Middleware
 
-- [ ] Middleware
+- [x] Middleware
 - [ ] Middleware group
 - [ ] Controller middleware
 
@@ -40,7 +45,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] FormRequest
 - [ ] Request Validator
 - [ ] Controller validator
-- [ ] Bind request into routes
+- [x] Bind request into routes
 
 ### Response
 
@@ -82,6 +87,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [x] Latte template engine
 - [ ] Twig template engine
 - [ ] Blade template engine
+- [ ] Timber support
 - [ ] Menus
 - [ ] Pagination
 - [ ] Customizer sections (Kirki Framework)

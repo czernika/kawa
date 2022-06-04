@@ -160,4 +160,16 @@ class RouterTest extends TestCase
 		$this->assertSame('/admin/user/bar', $adminUserBarRoute->getUri());
 		$this->assertSame('/admin/user/crazy/bar', $adminUserCrazyBarRoute->getUri());
 	}
+
+	/** @group router */
+	public function test_router_has_middleware()
+	{
+		$this->router->group(['middleware' => 'web'], function () {
+			$this->router->isFrontPage(fn() => 'foo');
+		});
+
+		$route = $this->router->routes('GET')[0];
+
+		$this->assertSame(['web'], $route->getMiddleware());
+	}
 }

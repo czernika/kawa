@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Kawa\Support;
 
 use Kawa\App\App;
+use Kawa\App\Exceptions\HttpException;
 use Kawa\Foundation\Response;
 use Kawa\View\ViewFactory;
 
@@ -43,6 +44,23 @@ class Helper
 		}
 
 		return self::$app;
+	}
+
+	/**
+	 * Throw exception
+	 *
+	 * @param integer $code
+	 * @param string $message
+	 * @throws HttpException
+	 * @return never
+	 */
+	public static function abort(int $code, string $message = '')
+	{
+		$message = $message === '' ?
+					Response::$statusTexts[$code] :
+					$message;
+
+		throw new HttpException($message, $code);
 	}
 
 	/**

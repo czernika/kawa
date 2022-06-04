@@ -20,6 +20,16 @@ class ViewFactory
 	}
 
 	/**
+	 * Get response service
+	 *
+	 * @return ResponseService
+	 */
+	public function response() : ResponseService
+	{
+		return $this->responseService;
+	}
+
+	/**
 	 * Define engine contract
 	 *
 	 * @return void

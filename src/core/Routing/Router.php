@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kawa\Routing;
 
 use Closure;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Kawa\Foundation\Request;
 use Kawa\Routing\Exceptions\InvalidRouteMethodException;
@@ -70,11 +71,16 @@ class Router
 		}
 
 		array_walk($attributes, function (&$value, $key) {
-			if (!in_array($key, ['prefix', 'name', 'namespace'], true)) {
+			if (!in_array($key, ['prefix', 'name', 'namespace', 'middleware'], true)) {
 				return $value;
 			}
 
-			if (array_key_exists($key, $this->attributes)) {
+			if ('middleware' === $key) {
+				$middleware = array_key_exists($key, $this->attributes) ? $this->attributes[$key] : [];
+				$value = array_merge(Arr::wrap($middleware), Arr::wrap($value));
+			}
+
+			if (array_key_exists($key, $this->attributes) && 'middleware' !== $key) {
 				$value = match ($key) {
 					'prefix' => Str::start($value, '/'),
 					'namespace' => Str::start($value, '\\'),

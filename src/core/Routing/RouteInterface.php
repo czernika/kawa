@@ -32,7 +32,7 @@ interface RouteInterface
 	/**
 	 * Set route namespace
 	 *
-	 * @param callable|array|string $handler
+	 * @param string $namespace
 	 * @return static
 	 */
     public function setNamespace(string $namespace) : static;
@@ -43,6 +43,21 @@ interface RouteInterface
 	 * @return string
 	 */
 	public function getNamespace() : string;
+
+	/**
+	 * Set route middleware
+	 *
+	 * @param array|string $middleware
+	 * @return static
+	 */
+    public function setMiddleware(array|string $middleware) : static;
+
+	/**
+	 * Get route middleware
+	 *
+	 * @return array
+	 */
+	public function getMiddleware() : array;
 
 	/**
 	 * Define does this route is satisfies the request

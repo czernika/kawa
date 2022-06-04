@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unit\Routing;
 
+use Kawa\Routing\UriRoute;
 use Kawa\Routing\WordPressTagRoute;
 use PHPUnit\Framework\TestCase;
 
@@ -21,5 +22,12 @@ class RouteTest extends TestCase
 					->setCondition(['is_page', 1]);
 
 		$this->assertTrue($routeWithParams->isSatisfied());
+	}
+
+	/** @group route */
+	public function test_route_has_middleware_array()
+	{
+		$route = (new UriRoute());
+		$this->assertIsArray($route->getMiddleware());
 	}
 }

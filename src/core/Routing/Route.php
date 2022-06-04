@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kawa\Routing;
 
+use Illuminate\Support\Arr;
 use Kawa\Routing\MatchesCondition\ConditionInterface;
 use Kawa\Support\Str;
 use Kawa\Support\Traits\HasAttributes;
@@ -54,6 +55,24 @@ class Route implements RouteInterface
 	public function getNamespace() : string
 	{
 		return Str::finish($this->getAttribute('namespace'), '\\');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+    public function setMiddleware(array|string $middleware) : static
+	{
+		return $this->mergeAttributes('middleware', $middleware);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getMiddleware() : array
+	{
+		return $this->hasAttribute('middleware') ?
+				Arr::wrap($this->getAttribute('middleware')) :
+				[];
 	}
 
 	/**

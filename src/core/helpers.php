@@ -126,3 +126,38 @@ if (!function_exists('view')) {
 		return Helper::viewResponse($template, $context, ...$params);
 	}
 }
+
+if (!function_exists('abort')) {
+
+	/**
+	 * Throw exception
+	 *
+	 * @param integer $code
+	 * @param string $message
+	 * @throws HttpException
+	 * @return never
+	 */
+	function abort(int $code, string $message = '')
+	{
+		return Helper::abort($code, $message);
+	}
+}
+
+if (!function_exists('abort_if')) {
+
+	/**
+	 * Throw exception if condition was met
+	 *
+	 * @param bool $condition
+	 * @param integer $code
+	 * @param string $message
+	 * @throws HttpException
+	 * @return never
+	 */
+	function abort_if(bool $condition, int $code, string $message = '')
+	{
+		if ($condition) {
+			return Helper::abort($code, $message);
+		}
+	}
+}

@@ -11,10 +11,15 @@ namespace Kawa\Foundation;
 
 use Closure;
 use DI\Container;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Arr;
+use Kawa\App\Exceptions\HttpException;
 use Kawa\Routing\Exceptions\RouteNotFoundException;
 use Kawa\Routing\Route;
 use Kawa\Routing\Router;
 use Kawa\View\ResponseService;
+use Kawa\View\ViewFactory;
+use Throwable;
 
 abstract class Kernel implements KernelInterface
 {
@@ -25,6 +30,13 @@ abstract class Kernel implements KernelInterface
 	 * @var array
 	 */
 	protected array $providers = [];
+
+	/**
+	 * List of theme middleware
+	 *
+	 * @var array
+	 */
+	protected array $middleware = [];
 
 	/** @var ResponseService */
 	protected ResponseService $responseService;
@@ -66,12 +78,81 @@ abstract class Kernel implements KernelInterface
 	protected function dispatch(Route $route, Request $request) : Response
 	{
 		$handler = $route->getHandler();
+		$middleware = $route->getMiddleware();
 
-		// Handle middleware here
+		try {
+			$response = $this->executeMiddleware($middleware, $request, $handler);
+		} catch (HttpException $th) {
+			$response = $this->throwExceptionPage($th);
+		}
 
-		$response = $this->container->call($handler);
+		if (is_string($response)) {
+			return new Response($response);
+		}
 
 		return $response;
+	}
+
+	/**
+	 * Handle exception
+	 *
+	 * @param Throwable $th
+	 * @return void
+	 */
+	protected function throwExceptionPage(Throwable $th)
+	{
+		return $this->container->call(
+			[ViewFactory::class, 'render'],
+			[
+				'template' => 'errors.404',
+				'context' => ['message' => $th->getMessage(), 'code' => $th->getCode()],
+			],
+		);
+	}
+
+	/**
+	 * Execute middleware and get response
+	 *
+	 * @param array $middleware
+	 * @param Request $request
+	 * @param Closure|array|string $next
+	 * @return ResponseInterface|string
+	 */
+	protected function executeMiddleware(array $middleware, Request $request, Closure|array|string $next) : Response|string
+	{
+		$topMiddleware = array_shift($middleware);
+
+		if ($topMiddleware === null) {
+			$params = [$request];
+			return $this->container->call($next, $params);
+		}
+
+		$nextMiddleware = function ($request) use ($middleware, $next) {
+			$response = $this->executeMiddleware($middleware, $request, $next);
+			return $response;
+		};
+
+		$middlewareObject = $this->getMiddleware($topMiddleware);
+		$middlewareHandler = $this->container->make($middlewareObject);
+
+		$arguments = [$request, $nextMiddleware];
+
+		return $this->container->call([$middlewareHandler, 'handle'], $arguments);
+	}
+
+	/**
+	 * Get middleware by key
+	 *
+	 * @param string $key
+	 * @return void
+	 */
+	public function getMiddleware(string $key)
+	{
+		if (array_key_exists($key, $this->middleware)) {
+			return $this->middleware[$key];
+		}
+
+		return $key;
 	}
 
 	/**
