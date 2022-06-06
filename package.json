@@ -1,0 +1,17 @@
+{
+	"name": "kawa",
+	"version": "1.0.0",
+	"description": "Developer-friendly framework for WordPress theme development with latte template engine and bedrock structure",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/czernika/kawa.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/czernika/kawa/issues"
+	},
+	"homepage": "https://github.com/czernika/kawa#readme"
+}

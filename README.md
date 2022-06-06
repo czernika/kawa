@@ -17,9 +17,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [x] Service providers
 - [x] Debugger
 - [ ] App configuration
-- [x] Docker compose (PHP 8.0, Nginx, Mysql, Phpmyadmin, Composer, WP Cli, Mailhog*)
-
-* - Will be installed later
+- [x] Docker compose (PHP 8.0, Nginx, Mysql, Phpmyadmin, Composer, WP Cli, NodeJS, Mailhog)
 
 ### Routing
 

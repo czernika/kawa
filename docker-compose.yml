@@ -11,49 +11,25 @@ services:
       - ./:/var/www/html:delegated
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 8080:80
+      - 80:8080
     depends_on:
       - php
       - mysql
     networks:
       - bedrock
+    restart: always
 
   php:
     container_name: kawa-php
-    image: nanoninja/php-fpm:8.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./:/var/www/html
       - ./docker/config/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
       - 9000:9000
-    networks:
-      - bedrock
-
-  composer:
-    container_name: kawa-composer
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./:/var/www/html
-    depends_on:
-      - php
-      - web
-    networks:
-      - bedrock
-
-  wp-cli:
-    container_name: kawa-wp-cli
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./:/var/www/html
     links:
-      - mysql
-    depends_on:
-      - php
-      - web
       - mysql
     environment:
       - WP_CLI_ALLOW_ROOT=true
@@ -72,6 +48,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     networks:
       - bedrock
+    restart: always
 
   phpmyadmin:
     container_name: kawa-phpmyadmin
@@ -85,5 +62,15 @@ services:
     environment:
       - PMA_HOST=mysql
       - PMA_PORT=3306
+    networks:
+      - bedrock
+
+  mailhog:
+    container_name: kawa-mailhog
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
     networks:
       - bedrock
