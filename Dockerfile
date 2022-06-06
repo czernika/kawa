@@ -12,6 +12,9 @@ RUN chmod +x /bin/wp-cli.phar
 RUN cd /bin && mv wp-cli.phar wp
 RUN mkdir -p /var/www/.wp-cli/cache && chown www-data:www-data /var/www/.wp-cli/cache
 
+# Install salts generator
+RUN wp package install aaemnnosttv/wp-cli-dotenv-command:^2.0 --allow-root
+
 # Install NodeJS
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
