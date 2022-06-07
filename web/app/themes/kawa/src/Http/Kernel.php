@@ -15,7 +15,10 @@ class Kernel extends FoundationKernel
 	/**
 	 * List of theme middleware
 	 *
-	 * @var array
+	 * If you group middleware under array,
+	 * it will be considered as group of middleware
+	 *
+	 * @var array<string, class-string|array<class-string>>
 	 */
 	protected array $middleware = [
 		'web' => AbspathDefined::class,

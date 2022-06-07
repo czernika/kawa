@@ -7,9 +7,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install wp-cli
 RUN apt-get update && apt-get install -y sudo less mariadb-client
-RUN curl -o /bin/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x /bin/wp-cli.phar
-RUN cd /bin && mv wp-cli.phar wp
+
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+
 RUN mkdir -p /var/www/.wp-cli/cache && chown www-data:www-data /var/www/.wp-cli/cache
 
 # Install salts generator

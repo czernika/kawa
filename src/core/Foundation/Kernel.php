@@ -11,8 +11,6 @@ namespace Kawa\Foundation;
 
 use Closure;
 use DI\Container;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Arr;
 use Kawa\App\Exceptions\HttpException;
 use Kawa\Routing\Exceptions\RouteNotFoundException;
 use Kawa\Routing\Route;
@@ -96,10 +94,11 @@ abstract class Kernel implements KernelInterface
 	/**
 	 * Handle exception
 	 *
+	 * TODO refactor template
 	 * @param Throwable $th
-	 * @return void
+	 * @return mixed
 	 */
-	protected function throwExceptionPage(Throwable $th)
+	protected function throwExceptionPage(Throwable $th) : mixed
 	{
 		return $this->container->call(
 			[ViewFactory::class, 'render'],
@@ -116,6 +115,7 @@ abstract class Kernel implements KernelInterface
 	 * @param array $middleware
 	 * @param Request $request
 	 * @param Closure|array|string $next
+	 * @throws InvalidArgumentException if wrong middleware key was given
 	 * @return ResponseInterface|string
 	 */
 	protected function executeMiddleware(array $middleware, Request $request, Closure|array|string $next) : Response|string
@@ -128,12 +128,16 @@ abstract class Kernel implements KernelInterface
 		}
 
 		$nextMiddleware = function ($request) use ($middleware, $next) {
-			$response = $this->executeMiddleware($middleware, $request, $next);
-			return $response;
+			return $this->executeMiddleware($middleware, $request, $next);
 		};
 
-		$middlewareObject = $this->getMiddleware($topMiddleware);
-		$middlewareHandler = $this->container->make($middlewareObject);
+		$middlewareGroup = $this->getMiddleware($topMiddleware);
+
+		if (is_array($middlewareGroup)) {
+			return $this->executeMiddleware($middlewareGroup, $request, $nextMiddleware);
+		}
+
+		$middlewareHandler = $this->container->make($middlewareGroup);
 
 		$arguments = [$request, $nextMiddleware];
 

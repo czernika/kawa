@@ -38,7 +38,7 @@ Developer-friendly framework for WordPress theme development with latte template
 ### Middleware
 
 - [x] Middleware
-- [ ] Middleware group
+- [x] Middleware group
 - [ ] Controller middleware
 
 ### Request

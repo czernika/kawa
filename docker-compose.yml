@@ -22,7 +22,7 @@ services:
   php:
     container_name: kawa-php
     build:
-      context: .
+      context: ./docker
       dockerfile: Dockerfile
     volumes:
       - ./:/var/www/html
