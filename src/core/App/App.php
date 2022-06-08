@@ -12,7 +12,6 @@ namespace Kawa\App;
 use Kawa\Bootstrappers\BootServiceProvider;
 use Kawa\Bootstrappers\Helpers;
 use Kawa\Bootstrappers\RegisterServiceProvider;
-use Kawa\Foundation\Kernel;
 use Kawa\Foundation\KernelInterface;
 
 class App extends AppContainer

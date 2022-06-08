@@ -8,6 +8,7 @@
 
 use DI\Container;
 use Kawa\App\App;
+use Kawa\App\Config;
 use Kawa\Foundation\KernelInterface;
 use Kawa\Foundation\Request;
 use Kawa\Routing\Router;
@@ -72,4 +73,6 @@ $app->singleton(
  *
  * Finally boot application itself on init hook
  */
+Config::init(get_template_directory());
+
 add_action('init', [$app, 'boot']);

@@ -103,7 +103,7 @@ abstract class Kernel implements KernelInterface
 		return $this->container->call(
 			[ViewFactory::class, 'render'],
 			[
-				'template' => 'errors.404',
+				'template' => config('views.templates.error', 'errors.index'),
 				'context' => ['message' => $th->getMessage(), 'code' => $th->getCode()],
 			],
 		);

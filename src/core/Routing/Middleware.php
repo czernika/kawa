@@ -38,7 +38,7 @@ abstract class Middleware
 	protected function showErrorPage(int $code, ?string $message = null)
 	{
 		$message = $message ?? Response::$statusTexts[$code];
-		return $this->view->render('errors.404', compact('message', 'code'))
+		return $this->view->render(config('views.templates.error', 'errors.index'), compact('message', 'code'))
 					->setStatusCode($code);
 	}
 }

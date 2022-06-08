@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Kawa\Support;
 
 use Kawa\App\App;
+use Kawa\App\Config;
 use Kawa\App\Exceptions\HttpException;
 use Kawa\Foundation\Response;
 use Kawa\View\ViewFactory;
@@ -77,5 +78,17 @@ class Helper
 		$factory = self::$app->get(ViewFactory::class);
 
 		return $factory->render($template, $context, ...$params);
+	}
+
+	/**
+	 * Get value from config files
+	 *
+	 * @param string $key
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public static function config(string $key, $default = null) : mixed
+	{
+		return Config::get($key, $default);
 	}
 }

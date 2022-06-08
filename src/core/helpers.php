@@ -106,6 +106,21 @@ if (!function_exists('app')) {
 	}
 }
 
+if (!function_exists('config')) {
+
+	/**
+	 * Get value from config files
+	 *
+	 * @param string $key
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	function config(string $key, $default = null) : mixed
+	{
+		return Helper::config($key, $default);
+	}
+}
+
 /**
  * -------------------------------------------------------------------------
  * Response

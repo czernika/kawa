@@ -51,7 +51,7 @@ class Latte implements EngineContract
 	 */
 	private function lattifyPath(string $template) : string
 	{
-		return $this->getViewsDir() . Str::replace('.', DIRECTORY_SEPARATOR, $template) . '.latte';
+		return Str::finish($this->getViewsDir(), '/') . Str::replace('.', DIRECTORY_SEPARATOR, $template) . '.latte';
 	}
 
 	/**
@@ -61,6 +61,6 @@ class Latte implements EngineContract
 	 */
 	private function getViewsDir() : string
 	{
-		return get_template_directory() . '/resources/views/';
+		return wp_normalize_path(get_template_directory() . DIRECTORY_SEPARATOR . config('views.views', '/resources/views/'));
 	}
 }

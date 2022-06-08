@@ -16,7 +16,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [x] Dependency Injection Container
 - [x] Service providers
 - [x] Debugger
-- [ ] App configuration
+- [x] App configuration
 - [x] Docker compose (PHP 8.0, Nginx, Mysql, Phpmyadmin, Composer, WP Cli, NodeJS, Mailhog)
 
 ### Routing
@@ -52,7 +52,7 @@ Developer-friendly framework for WordPress theme development with latte template
 
 - [x] View Response
 - [ ] Output Response
-- [ ] Exception Response
+- [x] Exception Response
 - [ ] Redirect Response
 - [ ] JSON Response
 
