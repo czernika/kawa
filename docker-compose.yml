@@ -5,7 +5,6 @@ networks:
 
 services:
   web:
-    container_name: kawa-web
     image: nginx:stable-alpine
     volumes:
       - ./:/var/www/html:delegated
@@ -20,7 +19,7 @@ services:
     restart: always
 
   php:
-    container_name: kawa-php
+    container_name: ${APP_NAME}
     build:
       context: ./docker
       dockerfile: Dockerfile
@@ -37,7 +36,7 @@ services:
       - bedrock
 
   mysql:
-    container_name: kawa-db
+    container_name: ${APP_NAME}-db
     image: mysql:8
     volumes:
       - ./docker/db:/var/lib/mysql:delegated
@@ -51,7 +50,6 @@ services:
     restart: always
 
   phpmyadmin:
-    container_name: kawa-phpmyadmin
     image: phpmyadmin/phpmyadmin
     depends_on:
       - mysql
@@ -66,7 +64,6 @@ services:
       - bedrock
 
   mailhog:
-    container_name: kawa-mailhog
     image: mailhog/mailhog
     restart: always
     ports:
