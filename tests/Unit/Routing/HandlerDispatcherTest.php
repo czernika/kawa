@@ -21,6 +21,8 @@ class HandlerDispatcherTest extends TestCase
 	{
 		$this->container = new Container();
 		$this->app = new App($this->container);
+
+		HandlerDispatcher::instantiate($this->app);
 	}
 
 	/**

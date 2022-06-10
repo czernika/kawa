@@ -8,9 +8,19 @@ use Closure;
 use Kawa\Foundation\Kernel as FoundationKernel;
 use Kawa\Middleware\AbspathDefined;
 use Kawa\Routing\Router;
+use Theme\Providers\AppServiceProvider;
 
 class Kernel extends FoundationKernel
 {
+
+	/**
+	 * List of theme service providers
+	 *
+	 * @var array
+	 */
+	protected array $providers = [
+		AppServiceProvider::class,
+	];
 
 	/**
 	 * List of theme middleware

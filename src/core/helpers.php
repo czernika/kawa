@@ -80,15 +80,14 @@ if (!function_exists('dd')) {
 	/**
 	 * Dump and die helper
 	 *
-	 * `dump()` comes with Tracy debugger
+	 * `dumpe()` alias which comes with Tracy debugger
 	 *
 	 * @param mixed $var
 	 * @return void
 	 */
 	function dd(mixed $var) : void
 	{
-		dump($var);
-		die();
+		dumpe($var);
 	}
 }
 

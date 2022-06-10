@@ -6,7 +6,6 @@ namespace Kawa\Routing;
 
 use Illuminate\Support\Arr;
 use Kawa\App\App;
-use Kawa\Support\Str;
 
 class HandlerDispatcher
 {

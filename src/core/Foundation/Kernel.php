@@ -94,7 +94,6 @@ abstract class Kernel implements KernelInterface
 	/**
 	 * Handle exception
 	 *
-	 * TODO refactor template
 	 * @param Throwable $th
 	 * @return mixed
 	 */
@@ -139,9 +138,7 @@ abstract class Kernel implements KernelInterface
 
 		$middlewareHandler = $this->container->make($middlewareGroup);
 
-		$arguments = [$request, $nextMiddleware];
-
-		return $this->container->call([$middlewareHandler, 'handle'], $arguments);
+		return $this->container->call([$middlewareHandler, 'handle'], [$request, $nextMiddleware]);
 	}
 
 	/**

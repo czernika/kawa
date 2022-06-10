@@ -12,3 +12,8 @@ function is_page($id) : bool
 {
 	return true;
 }
+
+function get_template_directory() : string
+{
+	return __DIR__;
+}

@@ -27,24 +27,18 @@ class Config
 	/**
 	 * Initialize config data
 	 *
-	 * @param string|array $path
+	 * @param string $path
 	 * @return void
 	 */
-    public static function init(string|array $data) : void
+    public static function init(string $path) : void
 	{
 		if (self::$wasInitialized) {
 			return;
 		}
 
-		if (is_string($data)) {
-			$files = glob(Str::finish($data, DIRECTORY_SEPARATOR) . 'config/*.php');
-			foreach ($files as $file) {
-				self::$data[pathinfo($file)['filename']] = require_once $file;
-			}
-		}
-
-		if (is_array($data)) {
-			self::$data = $data;
+		$files = glob(Str::finish($path, DIRECTORY_SEPARATOR) . 'config/*.php');
+		foreach ($files as $file) {
+			self::$data[pathinfo($file)['filename']] = require_once $file;
 		}
 
 		self::$wasInitialized = true;
