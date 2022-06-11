@@ -35,7 +35,8 @@ Developer-friendly framework for WordPress theme development with latte template
 - [x] Named routes
 - [ ] Ajax routes
 - [x] Controllers
-- [ ] Route middleware
+- [x] Route middleware
+- [x] Group route middleware
 - [ ] Correct response
 - [ ] 404 / 200 fallbacks
 
@@ -117,8 +118,8 @@ Developer-friendly framework for WordPress theme development with latte template
 
 ### Console commands
 
-- [ ] Create controller
-- [ ] Create middleware
+- [x] Create controller
+- [x] Create middleware
 - [ ] Create request
 - [ ] Create customizer section
 - [ ] Create customizer panel

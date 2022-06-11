@@ -8,4 +8,4 @@
 
 use Kawa\Support\Facades\Route;
 
-Route::isFrontPage('Controller@index');
+Route::isFrontPage('FrontPageController@index');
