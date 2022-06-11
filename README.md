@@ -8,6 +8,66 @@ Developer-friendly framework for WordPress theme development with latte template
 
 [In progress](https://czernika.github.io/kawa-docs/)
 
+## Installation
+
+This package will be separated on core package, some helper packages for template engines and console generator. Primary app will be created as composer project to be installed like
+
+```sh
+composer create project czernika/kawa
+```
+
+## Getting Started
+
+Fill `.env` with correct for local development environment
+
+### With Docker
+
+Run `docker compose up -d`
+
+All interactive commands available under `docker exec -it kawa <command>` like
+
+```sh
+docker exec -it kawa composer require some/package
+docker exec -it kawa npm install npm-package
+docker exec -it kawa wp plugin list
+docker exec -it kawa php bin/kawa new:controller SomeController
+docker exec -it kawa bash
+```
+
+To create database run (if `.env` filled in)
+
+```sh
+docker exec -it kawa wp db create
+```
+
+Or simply using MySQL commands
+
+### On Local Server
+
+Basically same as production deployment
+
+## Production Deployment
+
+Fill `.env` with correct information for production server
+
+Document root for your server must be pointed into `web` directory. More about configuration files can be found [here](https://docs.roots.io/bedrock/master/server-configuration/)
+
+Create `wp-cli.local.yml` file with any production configuration but at least with
+
+```yml
+path: web/wp
+server:
+  docroot: web
+```
+
+## Tests
+
+Run `./vendor/bin/phpunit`
+
+## License
+
+Runs under MIT license
+
 ## Todo
 
 ### General
