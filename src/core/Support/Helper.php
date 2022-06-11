@@ -13,6 +13,10 @@ use Kawa\App\App;
 use Kawa\App\Config;
 use Kawa\App\Exceptions\HttpException;
 use Kawa\Foundation\Response;
+use Kawa\Routing\Exceptions\NamedRouteException;
+use Kawa\Routing\Route;
+use Kawa\Routing\Router;
+use Kawa\Routing\UriRoute;
 use Kawa\View\ViewFactory;
 
 class Helper
@@ -90,5 +94,45 @@ class Helper
 	public static function config(string $key, $default = null) : mixed
 	{
 		return Config::get($key, $default);
+	}
+
+	/**
+	 * Get route by its name
+	 *
+	 * @param string $name
+	 * @throws NamedRouteException
+	 * @return UriRoute
+	 */
+	public static function route(string $name) : UriRoute
+	{
+		$routes = self::getRouter()->getNamedRoutes();
+
+		if (!array_key_exists($name, $routes)) {
+			throw new NamedRouteException(sprintf('Route named %s doesn\'t found', $name));
+		}
+
+		return $routes[$name];
+	}
+
+	/**
+	 * Get route by its name
+	 *
+	 * @param string $name
+	 * @throws NamedRouteException
+	 * @return string
+	 */
+	public static function routeUri(string $name) : string
+	{
+		return self::route($name)->getUri();
+	}
+
+	/**
+	 * Get router instance
+	 *
+	 * @return Router
+	 */
+	public static function getRouter() : Router
+	{
+		return self::$app->get('router');
 	}
 }

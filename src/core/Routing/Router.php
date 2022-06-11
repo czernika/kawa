@@ -8,7 +8,9 @@ use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Kawa\Foundation\Request;
+use Kawa\Routing\Contracts\HasNameContract;
 use Kawa\Routing\Exceptions\InvalidRouteMethodException;
+use Kawa\Routing\Exceptions\NamedRouteException;
 use Kawa\Support\Str;
 
 class Router
@@ -34,6 +36,13 @@ class Router
 	 * @var array
 	 */
 	private array $attributes = [];
+
+	/**
+	 * List of named routes
+	 *
+	 * @var array
+	 */
+	private array $namedRoutes = [];
 
 	public function __construct(private Request $request)
 	{
@@ -483,13 +492,30 @@ class Router
 	 * @throws InvalidRouteMethodException if current route type is invalid
 	 * @return void
 	 */
-	public function where(array $regex)
+	public function where(array $regex) : void
 	{
 		if (!$this->currentRoute instanceof UriRoute) {
 			throw new InvalidRouteMethodException(sprintf('`where()` method supported only by `Kawa\Routing\UriRoute`, %s given', get_class($this->currentRoute)));
 		}
 
-		return $this->currentRoute->where($regex);
+		$this->currentRoute->where($regex);
+	}
+
+	/**
+	 * Set route name
+	 *
+	 * @param string $name
+	 * @return void
+	 */
+	public function name(string $name)
+	{
+		if (!$this->currentRoute instanceof HasNameContract) {
+			throw new InvalidRouteMethodException(sprintf('`name()` method supported only by `Kawa\Routing\Contracts\HasNameContract` routes, %s given', get_class($this->currentRoute)));
+		}
+
+		$this->addNamedRoute($name);
+
+		return $this->currentRoute->setName($name);
 	}
 
 	/**
@@ -521,6 +547,32 @@ class Router
 	protected function setCurrentRoute() : void
 	{
 		$this->collection->addRoute($this->currentRoute);
+	}
+
+	/**
+	 * Add named route to an array
+	 *
+	 * @param string $name
+	 * @throws NamedRouteException if route name already has been taken
+	 * @return void
+	 */
+	protected function addNamedRoute(string $name) : void
+	{
+		if (array_key_exists($name, $this->getNamedRoutes())) {
+			throw new NamedRouteException(sprintf('Route named %s already exists', $name));
+		}
+
+		$this->namedRoutes[$name] = $this->currentRoute;
+	}
+
+	/**
+	 * Get list of named routes
+	 *
+	 * @return array
+	 */
+	public function getNamedRoutes() : array
+	{
+		return $this->namedRoutes;
 	}
 
 	/**

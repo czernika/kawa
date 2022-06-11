@@ -8,10 +8,11 @@ declare(strict_types=1);
 namespace Kawa\Routing;
 
 use Kawa\Foundation\Request;
+use Kawa\Routing\Contracts\HasNameContract;
 use Kawa\Routing\Contracts\HasUriContract;
 use Kawa\Routing\MatchesCondition\UriCondition;
 
-class UriRoute extends Route implements HasUriContract
+class UriRoute extends Route implements HasUriContract, HasNameContract
 {
 
 	/**
@@ -29,6 +30,27 @@ class UriRoute extends Route implements HasUriContract
 	public function getUri() : string
 	{
 		return $this->getAttribute('uri');
+	}
+
+	/**
+	 * Set route name
+	 *
+	 * @param string $name
+	 * @return static
+	 */
+	public function setName(string $name) : static
+	{
+		return $this->addAttribute('name', $name);
+	}
+
+	/**
+	 * Get route name
+	 *
+	 * @return string|null
+	 */
+	public function getName() : ?string
+	{
+		return $this->getAttribute('name');
 	}
 
 	/**

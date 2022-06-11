@@ -18,6 +18,10 @@ Developer-friendly framework for WordPress theme development with latte template
 - [x] Debugger
 - [x] App configuration
 - [x] Docker compose (PHP 8.0, Nginx, Mysql, Phpmyadmin, Composer, WP Cli, NodeJS, Mailhog)
+- [x] Error handler
+- [ ] Maintenance mode
+- [ ] Hello World styling
+- [ ] Branding
 
 ### Routing
 
@@ -28,7 +32,7 @@ Developer-friendly framework for WordPress theme development with latte template
 - [ ] Query filter for custom routes
 - [ ] Redirect routes
 - [ ] View routes
-- [ ] Named routes
+- [x] Named routes
 - [ ] Ajax routes
 - [x] Controllers
 - [ ] Route middleware

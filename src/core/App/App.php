@@ -13,7 +13,6 @@ use Kawa\Bootstrappers\BootServiceProvider;
 use Kawa\Bootstrappers\Helpers;
 use Kawa\Bootstrappers\RegisterServiceProvider;
 use Kawa\Foundation\KernelInterface;
-use Tracy\Debugger;
 
 class App extends AppContainer
 {

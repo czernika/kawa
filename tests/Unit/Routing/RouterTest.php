@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Unit\Routing;
 
+use Kawa\App\App;
 use Kawa\Foundation\Request;
+use Kawa\Routing\Contracts\HasNameContract;
 use Kawa\Routing\Exceptions\InvalidRouteMethodException;
+use Kawa\Routing\Exceptions\NamedRouteException;
 use Kawa\Routing\Router;
+use Kawa\Support\Helper;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
@@ -171,5 +175,23 @@ class RouterTest extends TestCase
 		$route = $this->router->routes('GET')[0];
 
 		$this->assertSame(['web'], $route->getMiddleware());
+	}
+
+	/** @group router */
+	public function test_router_can_have_only_one_same_named_route()
+	{
+		$this->router->get('/foo', fn() => 'foo')->name('foo');
+		$this->router->get('/bar', fn() => 'bar')->name('bar');
+
+		/** @var HasNameContract */
+		$route = $this->router->routes('GET')[0];
+		$this->assertSame('foo', $route->getName());
+
+		/** @var HasNameContract */
+		$route = $this->router->routes('GET')[1];
+		$this->assertSame('bar', $route->getName());
+
+		$this->expectException(NamedRouteException::class);
+		$this->router->get('/new', fn() => 'new')->name('bar');
 	}
 }
