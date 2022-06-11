@@ -11,10 +11,8 @@ RUN apt-get update && apt-get install -y sudo less mariadb-client
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
-RUN mkdir -p /var/www/.wp-cli/cache && chown www-data:www-data /var/www/.wp-cli/cache
-
-# Install salts generator
-RUN wp package install aaemnnosttv/wp-cli-dotenv-command:^2.0 --allow-root
+RUN mkdir -p /var/www/.wp-cli/cache
+RUN chown www-data:www-data -R /var/www/.wp-cli
 
 # Install NodeJS
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -

@@ -32,6 +32,8 @@ services:
     links:
       - mysql
     environment:
+      WP_CLI_CONFIG_PATH: /var/www/html/.wp-cli/config.yml
+      WP_CLI_PACKAGES_DIR: /var/www/html/.wp-cli/packages
       WP_CLI_ALLOW_ROOT: 0
     networks:
       - bedrock
