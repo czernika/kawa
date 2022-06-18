@@ -8,6 +8,57 @@ Developer-friendly framework for WordPress theme development with latte template
 
 [In progress](https://czernika.github.io/kawa-docs/)
 
+## Why Kawa
+
+To simplify development workflow in Laravel-like way, for example
+
+### Routing
+
+**Native:**
+
+Using templates only and pages within admin-panel, no middleware
+
+**With Kawa:**
+
+Create own routes or use native WordPress callables
+
+```php
+Route::isFrontPage([Controller::class, 'method']);
+Route::get('/foo', fn() => 'Hello From Foo')->middleware('bar');
+```
+
+### The loop
+
+**Native:**
+
+```php
+<?php if($posts->have_posts()) : ?>
+  <ul>
+    <?php while($posts->have_posts()) : $posts->the_post(); ?>
+      <li>
+        <?php the_title(); ?>
+        <br>
+        Author - <?php the_author(); ?>
+      </li>
+    <?php endwhile; wp_reset_postdata(); ?>
+  </ul>
+<?php endif; ?>
+```
+
+**With Kawa (using Latte):**
+
+> Planning support for both blade and twig template engines, and Timber as extra framework
+
+```php
+<ul n:ifcontent>
+  <li n:foreach="$posts as $post">
+    {$post->title}
+    <br>
+    Author - {$post->author->display_name}
+  </li>
+</ul>
+```
+
 ## Installation
 
 This package will be separated on core package, some helper packages for template engines and console generator. Primary app will be created as composer project to be installed like
@@ -118,17 +169,24 @@ Runs under MIT license
 - [x] View Response
 - [ ] Output Response
 - [x] Exception Response
-- [ ] Redirect Response
+- [ ] Redirect Responses
 - [ ] JSON Response
 
 ### Models
 
-- [ ] Post Type models
-- [ ] Taxonomy models
+- [x] Post Type model attributes
+- [ ] Post type meta fields as attributes
+- [ ] Post type taxonomy relations
+- [ ] Post type thumb
+- [x] Post type author
+- [ ] Taxonomy model
+- [ ] Taxonomy meta fields as attributes
 - [ ] Model registration
 - [ ] Users
-- [ ] Authenticated model
+- [ ] User meta fields as attributes
+- [ ] Authenticatable model
 - [ ] Comments
+- [ ] Comments meta fields as attributes
 - [ ] Attachments
 - [ ] Metaboxes (Carbon Fields)
 - [ ] Metaboxes (ACF)

@@ -22,6 +22,10 @@ abstract class BaseModel
 	 */
 	protected function getPostProperty(string $name) : mixed
 	{
+		if (method_exists($this, $name)) {
+			return $this->$name();
+		}
+
 		if ($this->hasKey($name)) {
 			$name = $this->getKey($name);
 		}

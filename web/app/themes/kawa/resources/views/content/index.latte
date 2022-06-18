@@ -20,6 +20,9 @@
                 
                 <li>
                     {php the_title()}
+                    <br>
+                    Author - {php the_author()}
+                    
                 </li>
             {/while}
         </ul>
@@ -30,6 +33,8 @@
     <ul n:ifcontent>
         <li n:foreach="$posts as $post">
             {$post->title}
+            <br>
+            Author - {$post->author->display_name}
         </li>
     </ul>
     
