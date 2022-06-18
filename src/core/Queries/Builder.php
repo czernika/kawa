@@ -43,6 +43,9 @@ class Builder
 	 */
 	public function get() : PostCollection
 	{
+		$this->mergeQueryArguments([
+			'paged' => max(1, get_query_var('paged')),
+		]);
 		return new PostCollection(new WP_Query($this->getQueryArgs()));
 	}
 
@@ -66,5 +69,16 @@ class Builder
 	protected function setQueryArgument(string $key, $value) : void
 	{
 		$this->args[$key] = $value;
+	}
+
+	/**
+	 * Merge query arguments
+	 *
+	 * @param array $args
+	 * @return void
+	 */
+	protected function mergeQueryArguments(array $args) : void
+	{
+		$this->args = array_merge($this->args, $args);
 	}
 }

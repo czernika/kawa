@@ -48,4 +48,14 @@ class Kernel extends FoundationKernel
 			);
 		};
 	}
+
+	/**
+	 * Set custom pagination
+	 *
+	 * @return array
+	 */
+	protected function paginated() : array
+	{
+		return [];
+	}
 }

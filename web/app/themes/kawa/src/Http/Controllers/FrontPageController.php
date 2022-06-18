@@ -11,7 +11,7 @@ class FrontPageController extends Controller
 {
 	public function index(Request $request)
 	{
-		$posts = Post::all();
+		$posts = Post::get();
 		return view('content.index', compact('posts'));
 	}
 }

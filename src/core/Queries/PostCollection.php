@@ -36,14 +36,32 @@ class PostCollection implements Countable, IteratorAggregate
 	 */
 	protected Collection $posts;
 
+	/**
+	 * Pagination
+	 *
+	 * @var Pagination|null
+	 */
+	protected ?Pagination $pagination = null;
+
 	public function __construct(
-		protected WP_Query $query
+		protected WP_Query $query,
 	) {
 		$this->posts = $this->mapPosts();
 
 		$this->args = $query->query;
+		$this->total = $query->found_posts;
 
-		$this->total = $this->count();
+		$this->pagination = new Pagination($query->max_num_pages);
+	}
+
+	/**
+	 * Get pagination object
+	 *
+	 * @return void
+	 */
+	public function pagination()
+	{
+		return $this->pagination;
 	}
 
 	/**
@@ -107,5 +125,16 @@ class PostCollection implements Countable, IteratorAggregate
 	public function getIterator(): Traversable
 	{
 		return new ArrayIterator($this->getPosts());
+	}
+
+	/**
+	 * Get properties
+	 *
+	 * @param string $name
+	 * @return mixed
+	 */
+	public function __get(string $name) : mixed
+	{
+		return $this->$name;
 	}
 }

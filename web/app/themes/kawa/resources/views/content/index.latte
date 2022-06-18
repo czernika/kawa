@@ -10,4 +10,16 @@
             Author - {$post->author->display_name}
         </li>
     </ul>
+
+    <ul n:if="$posts->pagination">
+        {foreach $posts->pagination as $link}
+            <li class="">
+                <a href="{$link->link}" n:tag-if="$link->isLink">
+                    <span>
+                        {$link->label|noescape}
+                    </span>
+                </a>
+            </li>
+        {/foreach}
+    </ul>
 {/block}

@@ -14,7 +14,7 @@ class PostType extends BaseModel
 	/**
 	 * Post type slug
 	 */
-	protected const POST_TYPE = 'post';
+	public const POST_TYPE = 'post';
 
 	/**
 	 * Model ID

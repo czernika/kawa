@@ -65,6 +65,7 @@ class App extends AppContainer
 	 */
 	public function bootKernel() : void
 	{
+		add_action('pre_get_posts', [$this->kernel, 'preGetPosts']);
 		add_action('kawa/response', [$this->kernel, 'handle']);
 	}
 

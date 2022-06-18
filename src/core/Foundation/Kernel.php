@@ -20,6 +20,7 @@ use Kawa\Routing\Router;
 use Kawa\View\ResponseService;
 use Kawa\View\ViewFactory;
 use Throwable;
+use WP_Query;
 
 abstract class Kernel implements KernelInterface
 {
@@ -59,6 +60,7 @@ abstract class Kernel implements KernelInterface
 			$response = $this->dispatch($route, $request);
 		} catch (RouteNotFoundException $e) {
 			// Handle 404 or middleware exceptions
+			$response = $this->throwExceptionPage($e);
 		}
 
 		if (!headers_sent()) {
@@ -218,9 +220,39 @@ abstract class Kernel implements KernelInterface
 	}
 
 	/**
+	 * Fix pagination 404 error
+	 *
+	 * @param WP_Query $query
+	 * @return void
+	 */
+	public function preGetPosts(WP_Query $query) : void
+	{
+		if (is_admin()) {
+			return;
+		}
+
+		foreach ($this->paginated() as $paginated => $perPage) {
+			if ('post' === $paginated && is_home()) {
+				$query->set('posts_per_page', $perPage);
+			}
+
+			if ($query->is_post_type_archive($paginated)) {
+				$query->set('posts_per_page', $perPage);
+			}
+		}
+	}
+
+	/**
 	 * Resolve web routes
 	 *
 	 * @return Closure
 	 */
 	abstract protected function routes() : Closure;
+
+	/**
+	 * Get list of paginated post types
+	 *
+	 * @return array
+	 */
+	abstract protected function paginated() : array;
 }

@@ -9,3 +9,5 @@
 use Kawa\Support\Facades\Route;
 
 Route::isFrontPage('FrontPageController@index');
+Route::isHome('FrontPageController@index');
+// Route::is404('FrontPageController@index');

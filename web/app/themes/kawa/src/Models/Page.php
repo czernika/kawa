@@ -8,5 +8,5 @@ use Kawa\Models\PostType;
 
 class Page extends PostType
 {
-    protected const POST_TYPE = 'page';
+    public const POST_TYPE = 'page';
 }

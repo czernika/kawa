@@ -156,11 +156,13 @@ Runs under MIT license
 - [x] Middleware
 - [x] Middleware group
 - [x] Controller middleware
+- [ ] Auth Policies
 
 ### Request
 
 - [ ] FormRequest
 - [ ] Request Validator
+- [ ] Old input
 - [ ] Controller validator
 - [x] Bind request into routes
 
@@ -171,6 +173,8 @@ Runs under MIT license
 - [x] Exception Response
 - [ ] Redirect Responses
 - [ ] JSON Response
+- [ ] Session
+- [ ] Flash messages
 
 ### Models
 
@@ -213,7 +217,9 @@ Runs under MIT license
 - [ ] Blade template engine
 - [ ] Timber support
 - [ ] Menus
-- [ ] Pagination
+- [x] List pagination
+- [x] Links pagination
+- [x] Pagination builder with arguments
 - [ ] Customizer sections (Kirki Framework)
 - [ ] Theme mods
 - [ ] Gutenberg block (Carbon Fields)
@@ -233,6 +239,7 @@ Runs under MIT license
 - [ ] Http API
 - [ ] Rest API
 - [ ] WPGraphQL
+- [ ] Resources (DTO)
 
 ### Console commands
 
