@@ -486,6 +486,20 @@ class Router
 	}
 
 	/**
+	 * Get view template for simple template
+	 *
+	 * @param string $uri
+	 * @param string $views
+	 * @param array $context
+	 * @param mixed ...$extra
+	 * @return static
+	 */
+	public function view(string $uri, string $views, array $context = [], ...$extra) : static
+	{
+		return $this->get($uri, fn() => view($views, $context, ...$extra));
+	}
+
+	/**
 	 * Add custom regex pattern to a route
 	 *
 	 * @param array $regex

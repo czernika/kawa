@@ -12,7 +12,9 @@ namespace Kawa\Foundation;
 use Closure;
 use DI\Container;
 use Kawa\App\Exceptions\HttpException;
+use Kawa\Routing\Controller;
 use Kawa\Routing\Exceptions\RouteNotFoundException;
+use Kawa\Routing\MiddlewareController;
 use Kawa\Routing\Route;
 use Kawa\Routing\Router;
 use Kawa\View\ResponseService;
@@ -76,7 +78,10 @@ abstract class Kernel implements KernelInterface
 	protected function dispatch(Route $route, Request $request) : Response
 	{
 		$handler = $route->getHandler();
-		$middleware = $route->getMiddleware();
+		$middleware = array_unique(array_merge(
+			$route->getMiddleware(),
+			$this->getControllerMiddleware($handler),
+		));
 
 		try {
 			$response = $this->executeMiddleware($middleware, $request, $handler);
@@ -89,6 +94,35 @@ abstract class Kernel implements KernelInterface
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Get an array of controller middleware
+	 *
+	 * @param Closure|string|array<Controller, string> $handler
+	 * @return array
+	 */
+	protected function getControllerMiddleware(Closure|string|array $handler) : array
+	{
+		if (!is_array($handler)) {
+			return [];
+		}
+
+		[$controller, $method] = $handler;
+
+		/** @var Controller */
+		$controller = $this->container->make($controller);
+
+		if (!$controller instanceof Controller) {
+			return [];
+		}
+
+		$controllerMiddleware = array_map(
+			fn(MiddlewareController $group) => $group->getMiddleware(),
+			$controller->getControllerMiddleware($method),
+		);
+
+		return $controllerMiddleware;
 	}
 
 	/**

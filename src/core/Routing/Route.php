@@ -62,7 +62,7 @@ class Route implements RouteInterface
 	 */
     public function setMiddleware(array|string $middleware) : static
 	{
-		return $this->mergeAttributes('middleware', $middleware);
+		return $this->mergeAttributes('middleware', Arr::wrap($middleware));
 	}
 
 	/**

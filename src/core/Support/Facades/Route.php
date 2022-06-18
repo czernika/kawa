@@ -42,6 +42,7 @@ namespace Kawa\Support\Facades;
  * @method static \Kawa\Routing\UriRoute patch(string $uri, callable|array|string $handler)
  * @method static \Kawa\Routing\UriRoute delete(string $uri, callable|array|string $handler)
  * @method static \Kawa\Routing\UriRoute options(string $uri, callable|array|string $handler)
+ * @method static \Kawa\Routing\UriRoute view(string $uri, string $views, array $context = [], ...$extra)
  */
 class Route extends Facade
 {

@@ -91,7 +91,7 @@ Runs under MIT license
 - [x] Group routes (nested groups included - uri, name, controller namespace)
 - [ ] Query filter for custom routes
 - [ ] Redirect routes
-- [ ] View routes
+- [x] View routes
 - [x] Named routes
 - [ ] Ajax routes
 - [x] Controllers
@@ -104,7 +104,7 @@ Runs under MIT license
 
 - [x] Middleware
 - [x] Middleware group
-- [ ] Controller middleware
+- [x] Controller middleware
 
 ### Request
 
@@ -199,6 +199,7 @@ Runs under MIT license
 ### Plugins and core
 
 - [ ] WooCommerce
+- [ ] Polylang
 - [ ] Multisite
 - [ ] Block theme
 
