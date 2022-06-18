@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unit\Routing;
 
+use Dummy\DummyAllowedMiddleware;
 use Kawa\App\App;
 use Kawa\Foundation\Request;
 use Kawa\Routing\Contracts\HasNameContract;
@@ -193,5 +194,19 @@ class RouterTest extends TestCase
 
 		$this->expectException(NamedRouteException::class);
 		$this->router->get('/new', fn() => 'new')->name('bar');
+	}
+
+	/** @group router */
+	public function test_router_applies_route_middleware()
+	{
+		$this->router->get('/foo', fn() => 'foo')->middleware(DummyAllowedMiddleware::class)->name('foo');
+
+		/** @var UriRoute */
+		$route = $this->router->routes('GET')[0];
+		$middleware = $route->getMiddleware();
+		$name = $route->getName();
+
+		$this->assertTrue(in_array(DummyAllowedMiddleware::class, $middleware, true));
+		$this->assertSame('foo', $name);
 	}
 }

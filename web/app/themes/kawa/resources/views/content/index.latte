@@ -11,7 +11,27 @@
 </head>
 <body>
 
-    <h1>Index</h1>
+    <h1>WordPress Query</h1>
+
+    {if have_posts()}
+        <ul>
+            {while have_posts()}
+                {php the_post()}
+                
+                <li>
+                    {php the_title()}
+                </li>
+            {/while}
+        </ul>
+    {/if}
+
+    <h1>Latte Query</h1>
+
+    <ul n:ifcontent>
+        <li n:foreach="$posts as $post">
+            {$post->title}
+        </li>
+    </ul>
     
     {php wp_footer()}
 </body>

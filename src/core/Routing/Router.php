@@ -519,9 +519,9 @@ class Router
 	 * Set route name
 	 *
 	 * @param string $name
-	 * @return void
+	 * @return static
 	 */
-	public function name(string $name)
+	public function name(string $name) : static
 	{
 		if (!$this->currentRoute instanceof HasNameContract) {
 			throw new InvalidRouteMethodException(sprintf('`name()` method supported only by `Kawa\Routing\Contracts\HasNameContract` routes, %s given', get_class($this->currentRoute)));
@@ -529,7 +529,20 @@ class Router
 
 		$this->addNamedRoute($name);
 
-		return $this->currentRoute->setName($name);
+		$this->currentRoute->setName($name);
+		return $this;
+	}
+
+	/**
+	 * Add middleware to a route
+	 *
+	 * @param array|string $middleware
+	 * @return static
+	 */
+	public function middleware(array|string $middleware) : static
+	{
+		$this->currentRoute->setMiddleware($middleware);
+		return $this;
 	}
 
 	/**
