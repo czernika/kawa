@@ -21,4 +21,21 @@ return [
 	'templates' => [
 		'error' => 'errors.index',
 	],
+
+	/**
+	 * -------------------------------------------------------------------------
+	 * Default query parameters
+	 * -------------------------------------------------------------------------
+	 *
+	 * Applies for every query request
+	 */
+	'query' => [
+
+		/**
+		 * When fetching all records it may be useful to set limit
+		 *
+		 * Default: `-1` (fetch all)
+		 */
+		'limit' => -1,
+	],
 ];

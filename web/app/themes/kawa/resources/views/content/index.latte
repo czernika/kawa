@@ -1,34 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+{layout '../index.latte'}
 
-    {php wp_head()}
-    
-</head>
-<body>
-
-    <h1>WordPress Query</h1>
-
-    {if have_posts()}
-        <ul>
-            {while have_posts()}
-                {php the_post()}
-                
-                <li>
-                    {php the_title()}
-                    <br>
-                    Author - {php the_author()}
-                    
-                </li>
-            {/while}
-        </ul>
-    {/if}
-
-    <h1>Latte Query</h1>
+{block content}
+    <h1>Hello World</h1>
 
     <ul n:ifcontent>
         <li n:foreach="$posts as $post">
@@ -37,7 +10,4 @@
             Author - {$post->author->display_name}
         </li>
     </ul>
-    
-    {php wp_footer()}
-</body>
-</html>
+{/block}

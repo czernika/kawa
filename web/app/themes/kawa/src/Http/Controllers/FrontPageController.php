@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Theme\Http\Controllers;
 
 use Kawa\Foundation\Request;
-use Kawa\Support\Facades\Query;
+use Theme\Models\Post;
 
 class FrontPageController extends Controller
 {
 	public function index(Request $request)
 	{
-		$posts = Query::query(['post_type' => 'post'])->get();
+		$posts = Post::all();
 		return view('content.index', compact('posts'));
 	}
 }

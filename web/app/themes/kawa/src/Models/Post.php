@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Theme\Http\Models;
+namespace Theme\Models;
 
 use Kawa\Models\PostType;
 

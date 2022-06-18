@@ -12,7 +12,7 @@ Developer-friendly framework for WordPress theme development with latte template
 
 To simplify development workflow in Laravel-like way, for example
 
-### Routing
+### Routing Example
 
 **Native:**
 
@@ -27,7 +27,7 @@ Route::isFrontPage([Controller::class, 'method']);
 Route::get('/foo', fn() => 'Hello From Foo')->middleware('bar');
 ```
 
-### The loop
+### The Loop Example
 
 **Native:**
 
@@ -194,7 +194,7 @@ Runs under MIT license
 
 ### Queries
 
-- [ ] Simple queries
+- [x] Simple queries
 - [ ] Advanced queries
 - [ ] Loop
 - [ ] Reflection API for Routes parameters

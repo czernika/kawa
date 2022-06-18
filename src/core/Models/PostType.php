@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Kawa\Models;
 
+use Kawa\Queries\Builder;
 use WP_Post;
 use WP_User;
 
 class PostType extends BaseModel
 {
+
+	/**
+	 * Post type slug
+	 */
+	protected const POST_TYPE = 'post';
 
 	/**
 	 * Model ID
@@ -182,5 +188,18 @@ class PostType extends BaseModel
 	public function updatedAt() : string
 	{
 		return $this->updated_at;
+	}
+
+	/**
+	 * Call query builder methods
+	 *
+	 * @param string $name
+	 * @param array $arguments
+	 * @return mixed
+	 */
+	public static function __callStatic(string $name, array $arguments) : mixed
+	{
+		$builder = new Builder(['post_type' => static::POST_TYPE]);
+		return call_user_func_array([$builder, $name], $arguments);
 	}
 }

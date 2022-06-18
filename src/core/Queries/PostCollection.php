@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 use IteratorAggregate;
 use Kawa\Models\PostType;
 use Traversable;
-use WP_Post;
 use WP_Query;
 
 class PostCollection implements Countable, IteratorAggregate
@@ -26,9 +25,9 @@ class PostCollection implements Countable, IteratorAggregate
 	/**
 	 * User query arguments
 	 *
-	 * @var array
+	 * @var array|null
 	 */
-	protected array $args = [];
+	protected ?array $args = null;
 
 	/**
 	 * List of queries posts
