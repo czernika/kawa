@@ -4,55 +4,10 @@ declare(strict_types=1);
 
 namespace Kawa\Models;
 
-use WP_Post;
-
-class BaseModel
+abstract class BaseModel
 {
 
-	/**
-	 * List of array keys to swap
-	 *
-	 * @var array
-	 */
-	private array $keys = [
-		'id' => 'ID',
-		'title' => 'post_title',
-		'name' => 'post_title',
-	];
-
-	public function __construct(
-		protected WP_Post $post,
-	) {}
-
-	/**
-	 * Get post ID
-	 *
-	 * @return string
-	 */
-	public function id() : string
-	{
-		return $this->id;
-	}
-
-	/**
-	 * Get post title
-	 *
-	 * @return string
-	 */
-	public function title() : string
-	{
-		return $this->title;
-	}
-
-	/**
-	 * Get post title (alias for `title()` method)
-	 *
-	 * @return string
-	 */
-	public function name() : string
-	{
-		return $this->title;
-	}
+	abstract protected function init();
 
 	public function __get(string $name) : mixed
 	{
@@ -81,7 +36,7 @@ class BaseModel
 	 */
 	protected function getAllowedKeys() : array
 	{
-		return $this->keys;
+		return PostMapper::getAllowedKeys();
 	}
 
 	/**
