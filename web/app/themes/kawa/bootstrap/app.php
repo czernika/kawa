@@ -11,7 +11,6 @@ use Kawa\App\App;
 use Kawa\Foundation\KernelInterface;
 use Kawa\Foundation\Request;
 use Kawa\Routing\Router;
-use Kawa\View\Engines\EngineContract;
 use Theme\Http\Kernel;
 
 /**
@@ -45,7 +44,7 @@ $app = new App($container);
  *
  * Default: "latte"
  */
-$app->set(EngineContract::class, 'latte');
+$app->engine(\Kawa\View\Engines\Latte::class);
 
 /**
  * -------------------------------------------------------------------------

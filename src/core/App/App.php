@@ -13,6 +13,7 @@ use Kawa\Bootstrappers\BootServiceProvider;
 use Kawa\Bootstrappers\Helpers;
 use Kawa\Bootstrappers\RegisterServiceProvider;
 use Kawa\Foundation\KernelInterface;
+use Kawa\View\Engines\EngineContract;
 
 class App extends AppContainer
 {
@@ -56,6 +57,17 @@ class App extends AppContainer
 		$this->bootKernel();
 
 		$this->isBooted = true;
+	}
+
+	/**
+	 * Define app engine contract
+	 *
+	 * @param string $engine
+	 * @return void
+	 */
+	public function engine(string $engine) : void
+	{
+		$this->set(EngineContract::class, \DI\get($engine));
 	}
 
 	/**

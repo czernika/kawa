@@ -36,12 +36,7 @@ class ViewFactory
 	 */
 	public function defineEngine() : void
 	{
-		$templateEngine = match ($this->app->get(EngineContract::class)) {
-			'latte' => \Kawa\View\Engines\Latte::class,
-			default => \Kawa\View\Engines\Latte::class,
-		};
-
-		$this->engine = $this->app->get($templateEngine);
+		$this->engine = $this->app->get(EngineContract::class);
 	}
 
 	/**
