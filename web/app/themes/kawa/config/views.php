@@ -13,12 +13,25 @@ return [
 
 	/**
 	 * -------------------------------------------------------------------------
+	 * Storage directory
+	 * -------------------------------------------------------------------------
+	 *
+	 * Where temporary files are stored
+	 */
+	'storage' => 'storage/cache/views',
+
+	/**
+	 * -------------------------------------------------------------------------
 	 * List of default template files
 	 * -------------------------------------------------------------------------
 	 *
 	 * This view files will be rendered
 	 */
 	'templates' => [
+
+		/**
+		 * Error page
+		 */
 		'error' => 'errors.index',
 	],
 

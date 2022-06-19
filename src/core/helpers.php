@@ -7,6 +7,7 @@
  * @package Kawa
  */
 
+use Kawa\Foundation\Redirector;
 use Kawa\Foundation\Response;
 use Kawa\Foundation\ResponseInterface;
 use Kawa\Support\Helper;
@@ -147,12 +148,12 @@ if (!function_exists('redirect')) {
 	/**
 	 * Get redirect response
 	 *
-	 * @param string $to
+	 * @param string|null $to
 	 * @param int $status
 	 * @param array $headers
-	 * @return ResponseInterface
+	 * @return ResponseInterface|Redirector
 	 */
-	function redirect(string $to, int $status = Response::HTTP_FOUND, array $headers = []) : ResponseInterface
+	function redirect(?string $to = null, int $status = Response::HTTP_FOUND, array $headers = []) : ResponseInterface|Redirector
 	{
 		return Helper::redirectResponse($to, $status, $headers);
 	}

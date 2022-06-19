@@ -43,6 +43,8 @@ namespace Kawa\Support\Facades;
  * @method static \Kawa\Routing\UriRoute delete(string $uri, callable|array|string $handler)
  * @method static \Kawa\Routing\UriRoute options(string $uri, callable|array|string $handler)
  * @method static \Kawa\Routing\UriRoute view(string $uri, string $views, array $context = [], ...$extra)
+ * @method static \Kawa\Foundation\ResponseInterface redirect(string $from, string $to, int $status = Response::HTTP_FOUND, array $headers = [])
+ * @method static \Kawa\Foundation\ResponseInterface permanentRedirect(string $from, string $to, array $headers = [])
  */
 class Route extends Facade
 {

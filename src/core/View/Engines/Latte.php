@@ -13,7 +13,16 @@ class Latte implements EngineContract
 	public function __construct(
 		private Engine $latte,
 	) {
+		$this->latte->setLoader(
+			new \Latte\Loaders\FileLoader($this->getViewsDir())
+		);
 
+		$this->latte->setTempDirectory($this->getStoragePath());
+
+		/**
+		 * Provide extra options for customizing Latte template engine
+		 */
+		do_action('kawa/engines/latte', $this->latte);
 	}
 
 	/**
@@ -51,7 +60,7 @@ class Latte implements EngineContract
 	 */
 	private function lattifyPath(string $template) : string
 	{
-		return Str::finish($this->getViewsDir(), '/') . Str::replace('.', DIRECTORY_SEPARATOR, $template) . '.latte';
+		return Str::replace('.', DIRECTORY_SEPARATOR, $template) . '.latte';
 	}
 
 	/**
@@ -61,6 +70,16 @@ class Latte implements EngineContract
 	 */
 	private function getViewsDir() : string
 	{
-		return wp_normalize_path(get_template_directory() . DIRECTORY_SEPARATOR . config('views.views', '/resources/views/'));
+		return wp_normalize_path(trailingslashit(get_template_directory()) . config('views.views', 'resources/views'));
+	}
+
+	/**
+	 * Get views directory
+	 *
+	 * @return string
+	 */
+	private function getStoragePath() : string
+	{
+		return wp_normalize_path(trailingslashit(get_template_directory()) . config('views.storage', 'storage/tmp'));
 	}
 }

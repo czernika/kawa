@@ -164,8 +164,8 @@ abstract class Kernel implements KernelInterface
 		$topMiddleware = array_shift($middleware);
 
 		if ($topMiddleware === null) {
-			$params = [$request];
-			return $this->container->call($next, $params);
+			$response = $this->container->call($next, [$request]);
+			return $this->interceptRedirector($response);
 		}
 
 		$nextMiddleware = function ($request) use ($middleware, $next) {
@@ -180,7 +180,23 @@ abstract class Kernel implements KernelInterface
 
 		$middlewareHandler = $this->container->make($middlewareGroup);
 
-		return $this->container->call([$middlewareHandler, 'handle'], [$request, $nextMiddleware]);
+		$response = $this->container->call([$middlewareHandler, 'handle'], [$request, $nextMiddleware]);
+		return $this->interceptRedirector($response);
+	}
+
+	/**
+	 * Intercept response and convert Redirector ro ResponseInterface
+	 *
+	 * @param ResponseInterface|Redirector|string $response
+	 * @return ResponseInterface
+	 */
+	private function interceptRedirector(ResponseInterface|Redirector|string $response) : ResponseInterface
+	{
+		if ($response instanceof Redirector) {
+			return $response->send();
+		}
+
+		return $response;
 	}
 
 	/**

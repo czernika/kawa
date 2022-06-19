@@ -180,7 +180,7 @@ Runs under MIT license
 - [ ] Output Response
 - [x] Exception Response
 - [x] Basic Redirect Response
-- [ ] Advanced Redirect Response and helpers (to, url, route, with, flash)
+- [ ] Advanced Redirect Response and helpers (to, url, route, with, flash, back, home)
 - [ ] JSON Response
 - [ ] Session
 - [ ] Flash messages

@@ -12,7 +12,9 @@ namespace Kawa\Support;
 use Kawa\App\App;
 use Kawa\App\Config;
 use Kawa\App\Exceptions\HttpException;
+use Kawa\Foundation\Redirector;
 use Kawa\Foundation\RedirectResponse;
+use Kawa\Foundation\Request;
 use Kawa\Foundation\Response;
 use Kawa\Foundation\ResponseInterface;
 use Kawa\Routing\Exceptions\NamedRouteException;
@@ -88,13 +90,18 @@ class Helper
 	/**
 	 * Get redirect response
 	 *
-	 * @param string $to
+	 * @param string|null $to
 	 * @param int $status
 	 * @param array $headers
-	 * @return ResponseInterface
+	 * @return ResponseInterface|Redirector
 	 */
-	public static function redirectResponse(string $to, int $status = Response::HTTP_FOUND, array $headers = []) : ResponseInterface
+	public static function redirectResponse(?string $to = null, int $status = Response::HTTP_FOUND, array $headers = []) : ResponseInterface|Redirector
 	{
+		if (null === $to) {
+			$redirector = new Redirector(self::$app->get(Request::class), $to, $status, $headers);
+			return $redirector;
+		}
+
 		return new RedirectResponse($to, $status, $headers);
 	}
 
