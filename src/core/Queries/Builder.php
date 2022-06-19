@@ -22,7 +22,7 @@ class Builder
 	 */
 	public function query(array $query) : static
 	{
-		$this->args = $query;
+		$this->mergeQueryArguments($query);
 		return $this;
 	}
 
@@ -68,7 +68,7 @@ class Builder
 	 */
 	public function get(string $var = 'paged') : PostCollection
 	{
-		if (in_array($var, ['page', 'paged'], true)) {
+		if (!in_array($var, ['page', 'paged'], true)) {
 			throw new InvalidArgumentException(sprintf('Invalid argument for `get()` method - `page` or `paged` supported, %s found', $var));
 		}
 
