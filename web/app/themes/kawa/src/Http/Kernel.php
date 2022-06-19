@@ -52,7 +52,7 @@ class Kernel extends FoundationKernel
 	/**
 	 * Set custom pagination
 	 *
-	 * @return array
+	 * @return array<string, int>
 	 */
 	protected function paginated() : array
 	{

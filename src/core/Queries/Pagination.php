@@ -33,9 +33,14 @@ class Pagination implements IteratorAggregate
 		$this->current = max(1, get_query_var($this->paged));
 	}
 
-	public function getIterator(): Traversable
+	/**
+	 * Implement iterator interface
+	 *
+	 * @return Traversable
+	 */
+	public function getIterator() : Traversable
 	{
-		return new ArrayIterator($this->pages() ?? []);
+		return new ArrayIterator($this->pages());
 	}
 
 	/**
@@ -81,9 +86,9 @@ class Pagination implements IteratorAggregate
 	 * Get list of pagination pages
 	 *
 	 * @param string $args
-	 * @return array|null
+	 * @return array
 	 */
-	public function pages(string|array $args = '') : ?array
+	public function pages(string|array $args = '') : array
 	{
 		return $this->buildPages($args);
 	}
@@ -92,9 +97,9 @@ class Pagination implements IteratorAggregate
 	 * Get pagination pages to build
 	 *
 	 * @param string $args
-	 * @return array|null
+	 * @return array
 	 */
-	protected function buildPages(string|array $args = '') : ?array
+	protected function buildPages(string|array $args = '') : array
 	{
 		$links = paginate_links(array_merge(
 			Arr::wrap($args),
@@ -107,8 +112,9 @@ class Pagination implements IteratorAggregate
 
 		if ($links) {
 			$links = array_map(fn($link) => new PaginationLink($link), $links);
+			return $links;
 		}
 
-		return $links;
+		return [];
 	}
 }

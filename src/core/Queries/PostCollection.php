@@ -9,6 +9,7 @@ use Countable;
 use Illuminate\Support\Collection;
 use IteratorAggregate;
 use Kawa\Models\PostType;
+use Nette\Utils\Paginator;
 use Traversable;
 use WP_Query;
 

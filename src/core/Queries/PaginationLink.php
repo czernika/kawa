@@ -49,10 +49,11 @@ class PaginationLink
 	 *
 	 * TODO refactor
 	 * @todo this looks little bit ridiculous
+	 * @link https://wp-kama.ru/function/paginate_links#example_34582
 	 * @param string $link
 	 * @return void
 	 */
-	private function parsePaginationString(string $link)
+	private function parsePaginationString(string $link) : void
 	{
 		$isLink = preg_match('~<a(.*?)href="([^"]+)"(.*?)>(.*?)</a>~', $link, $linkMatches);
 		preg_match('~<span(.*?)>(.*?)</span>~', $link, $spanMatches);
