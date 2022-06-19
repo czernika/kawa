@@ -37,7 +37,9 @@ class PaginationLink
 	 */
 	public string $label = '';
 
-	public function __construct(public string $html)
+	public function __construct(
+		public string $html,
+	)
 	{
 		$this->parsePaginationString($html);
 	}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kawa\Queries;
 
+use InvalidArgumentException;
 use WP_Query;
 
 class Builder
@@ -45,7 +46,7 @@ class Builder
 	{
 		return $this->paginate($perPage);
 	}
-6
+
 	/**
 	 * Alias for `take()` method
 	 *
@@ -62,10 +63,15 @@ class Builder
 	 * Get post collection
 	 *
 	 * @param string $var
+	 * @throws InvalidArgumentException
 	 * @return PostCollection
 	 */
 	public function get(string $var = 'paged') : PostCollection
 	{
+		if (in_array($var, ['page', 'paged'], true)) {
+			throw new InvalidArgumentException(sprintf('Invalid argument for `get()` method - `page` or `paged` supported, %s found', $var));
+		}
+
 		$this->mergeQueryArguments([
 			'paged' => max(1, get_query_var($var)),
 		]);
