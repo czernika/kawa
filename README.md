@@ -61,10 +61,19 @@ Route::get('/foo', fn() => 'Hello From Foo')->middleware('bar');
 
 ## Installation
 
-This package will be separated on core package, some helper packages for template engines and console generator. Primary app will be created as composer project to be installed like
+### With Composer
 
-```sh
+```bash
 composer create project czernika/kawa
+```
+
+### With Docker
+
+```bash
+docker run --rm --interactive --tty \
+    --volume $PWD:/app \
+    --user $(id -u):$(id -g) \
+    composer create-project czernika/kawa:dev-master <project-dir>
 ```
 
 ## Getting Started
@@ -77,7 +86,7 @@ Run `docker compose up -d`
 
 All interactive commands available under `docker exec -it kawa <command>` like
 
-```sh
+```bash
 docker exec -it kawa composer require some/package
 docker exec -it kawa npm install npm-package
 docker exec -it kawa wp plugin list
@@ -87,7 +96,7 @@ docker exec -it kawa bash
 
 To create database run (if `.env` filled in)
 
-```sh
+```bash
 docker exec -it kawa wp db create
 ```
 
@@ -133,6 +142,7 @@ Runs under MIT license
 - [ ] Maintenance mode
 - [ ] Hello World styling
 - [ ] Branding
+- [ ] Docker executable alias
 
 ### Routing
 
