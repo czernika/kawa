@@ -52,6 +52,9 @@ abstract class Kernel implements KernelInterface
 	 */
 	public function handle(Request $request) : void
 	{
+		/** @var WP_Query */
+		global $wp_query;
+
 		$resolver = $this->routes();
 		$resolver($this->router);
 
@@ -61,6 +64,9 @@ abstract class Kernel implements KernelInterface
 		} catch (RouteNotFoundException $e) {
 			// Handle 404 or middleware exceptions
 			$response = $this->throwExceptionPage($e);
+
+			$wp_query->set_404();
+			$response->setStatusCode($e->getCode());
 		}
 
 		if (!headers_sent()) {

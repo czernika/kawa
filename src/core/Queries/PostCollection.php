@@ -45,13 +45,14 @@ class PostCollection implements Countable, IteratorAggregate
 
 	public function __construct(
 		protected WP_Query $query,
+		protected string $paged = 'paged',
 	) {
 		$this->posts = $this->mapPosts();
 
 		$this->args = $query->query;
 		$this->total = $query->found_posts;
 
-		$this->pagination = new Pagination($query->max_num_pages);
+		$this->pagination = new Pagination($query->max_num_pages, $paged);
 	}
 
 	/**
