@@ -8,10 +8,12 @@ use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Kawa\Foundation\Request;
+use Kawa\Foundation\Response;
 use Kawa\Routing\Contracts\HasNameContract;
 use Kawa\Routing\Exceptions\InvalidRouteMethodException;
 use Kawa\Routing\Exceptions\NamedRouteException;
 use Kawa\Support\Str;
+use Kawa\Foundation\RedirectResponse;
 
 class Router
 {
@@ -497,6 +499,33 @@ class Router
 	public function view(string $uri, string $views, array $context = [], ...$extra) : static
 	{
 		return $this->get($uri, fn() => view($views, $context, ...$extra));
+	}
+
+	/**
+	 * Create redirect route
+	 *
+	 * @param string $from
+	 * @param string $to
+	 * @param int $status
+	 * @param array $headers
+	 * @return static
+	 */
+	public function redirect(string $from, string $to, int $status = Response::HTTP_FOUND, array $headers = []) : static
+	{
+		return $this->get($from, fn() => redirect($to, $status, $headers));
+	}
+
+	/**
+	 * Create permanent redirect
+	 *
+	 * @param string $from
+	 * @param string $to
+	 * @param array $headers
+	 * @return static
+	 */
+	public function permanentRedirect(string $from, string $to, array $headers = []) : static
+	{
+		return $this->redirect($from, $to, Response::HTTP_MOVED_PERMANENTLY, $headers);
 	}
 
 	/**

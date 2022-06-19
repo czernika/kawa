@@ -8,6 +8,7 @@
  */
 
 use Kawa\Foundation\Response;
+use Kawa\Foundation\ResponseInterface;
 use Kawa\Support\Helper;
 
 use function Env\env;
@@ -133,11 +134,27 @@ if (!function_exists('view')) {
 	 * @param string $template
 	 * @param array $context
 	 * @param mixed ...$params
-	 * @return Response
+	 * @return ResponseInterface
 	 */
-	function view(string $template, array $context = [], ...$params) : Response
+	function view(string $template, array $context = [], ...$params) : ResponseInterface
 	{
 		return Helper::viewResponse($template, $context, ...$params);
+	}
+}
+
+if (!function_exists('redirect')) {
+
+	/**
+	 * Get redirect response
+	 *
+	 * @param string $to
+	 * @param int $status
+	 * @param array $headers
+	 * @return ResponseInterface
+	 */
+	function redirect(string $to, int $status = Response::HTTP_FOUND, array $headers = []) : ResponseInterface
+	{
+		return Helper::redirectResponse($to, $status, $headers);
 	}
 }
 

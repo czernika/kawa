@@ -83,7 +83,7 @@ class Builder
 	 *
 	 * @return array
 	 */
-	protected function getQueryArgs() : array
+	public function getQueryArgs() : array
 	{
 		return $this->args;
 	}
@@ -95,7 +95,7 @@ class Builder
 	 * @param mixed $value
 	 * @return void
 	 */
-	protected function setQueryArgument(string $key, $value) : void
+	public function setQueryArgument(string $key, $value) : void
 	{
 		$this->args[$key] = $value;
 	}
@@ -106,7 +106,7 @@ class Builder
 	 * @param array $args
 	 * @return void
 	 */
-	protected function mergeQueryArguments(array $args) : void
+	public function mergeQueryArguments(array $args) : void
 	{
 		$this->args = array_merge($this->args, $args);
 	}

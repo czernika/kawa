@@ -34,13 +34,13 @@ Route::get('/foo', fn() => 'Hello From Foo')->middleware('bar');
 ```php
 <?php if($posts->have_posts()) : ?>
   <ul>
-    <?php while($posts->have_posts()) : $posts->the_post(); ?>
+    <?php while($posts->have_posts()) :
+      $posts->the_post(); ?>
       <li>
         <?php the_title(); ?>
-        <br>
-        Author - <?php the_author(); ?>
       </li>
-    <?php endwhile; wp_reset_postdata(); ?>
+    <?php endwhile;
+    wp_reset_postdata(); ?>
   </ul>
 <?php endif; ?>
 ```
@@ -53,8 +53,6 @@ Route::get('/foo', fn() => 'Hello From Foo')->middleware('bar');
 <ul n:ifcontent>
   <li n:foreach="$posts as $post">
     {$post->title}
-    <br>
-    Author - {$post->author->display_name}
   </li>
 </ul>
 ```
@@ -151,7 +149,7 @@ Runs under MIT license
 - [x] Regex routes with custom patterns
 - [x] Group routes (nested groups included - uri, name, controller namespace)
 - [ ] Query filter for custom routes
-- [ ] Redirect routes
+- [x] Redirect routes
 - [x] View routes
 - [x] Named routes
 - [ ] Ajax routes
@@ -181,7 +179,8 @@ Runs under MIT license
 - [x] View Response
 - [ ] Output Response
 - [x] Exception Response
-- [ ] Redirect Responses
+- [x] Basic Redirect Response
+- [ ] Advanced Redirect Response and helpers (to, url, route, with, flash)
 - [ ] JSON Response
 - [ ] Session
 - [ ] Flash messages

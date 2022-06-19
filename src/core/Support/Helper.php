@@ -12,9 +12,10 @@ namespace Kawa\Support;
 use Kawa\App\App;
 use Kawa\App\Config;
 use Kawa\App\Exceptions\HttpException;
+use Kawa\Foundation\RedirectResponse;
 use Kawa\Foundation\Response;
+use Kawa\Foundation\ResponseInterface;
 use Kawa\Routing\Exceptions\NamedRouteException;
-use Kawa\Routing\Route;
 use Kawa\Routing\Router;
 use Kawa\Routing\UriRoute;
 use Kawa\View\ViewFactory;
@@ -74,14 +75,27 @@ class Helper
 	 * @param string $template
 	 * @param array $context
 	 * @param mixed ...$params
-	 * @return Response
+	 * @return ResponseInterface
 	 */
-	public static function viewResponse(string $template, array $context = [], ...$params) : Response
+	public static function viewResponse(string $template, array $context = [], ...$params) : ResponseInterface
 	{
 		/** @var ViewFactory */
 		$factory = self::$app->get(ViewFactory::class);
 
 		return $factory->render($template, $context, ...$params);
+	}
+
+	/**
+	 * Get redirect response
+	 *
+	 * @param string $to
+	 * @param int $status
+	 * @param array $headers
+	 * @return ResponseInterface
+	 */
+	public static function redirectResponse(string $to, int $status = Response::HTTP_FOUND, array $headers = []) : ResponseInterface
+	{
+		return new RedirectResponse($to, $status, $headers);
 	}
 
 	/**

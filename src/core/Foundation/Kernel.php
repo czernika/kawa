@@ -81,9 +81,9 @@ abstract class Kernel implements KernelInterface
 	 *
 	 * @param Route $route
 	 * @param Request $request
-	 * @return Response
+	 * @return ResponseInterface
 	 */
-	protected function dispatch(Route $route, Request $request) : Response
+	protected function dispatch(Route $route, Request $request) : ResponseInterface
 	{
 		$handler = $route->getHandler();
 		$middleware = array_unique(array_merge(
@@ -159,7 +159,7 @@ abstract class Kernel implements KernelInterface
 	 * @throws InvalidArgumentException if wrong middleware key was given
 	 * @return ResponseInterface|string
 	 */
-	protected function executeMiddleware(array $middleware, Request $request, Closure|array|string $next) : Response|string
+	protected function executeMiddleware(array $middleware, Request $request, Closure|array|string $next) : ResponseInterface|string
 	{
 		$topMiddleware = array_shift($middleware);
 
