@@ -377,7 +377,7 @@ class Router
 	 */
 	public function condition(string|array $condition, callable|array|string $handler) : static
 	{
-		return $this->createWordPressRoute($handler, $condition);
+		return $this->createWordPressRoute($handler, Arr::wrap($condition));
 	}
 
 	/**

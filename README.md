@@ -62,7 +62,7 @@ Route::get('/foo', fn() => 'Hello From Foo')->middleware('bar');
 ### With Composer
 
 ```bash
-composer create project czernika/kawa
+composer create-project czernika/kawa:dev-master
 ```
 
 ### With Docker

@@ -32,7 +32,7 @@ namespace Kawa\Support\Facades;
  * @method static \Kawa\Routing\Router isTax(callable|array|string $handler, string|array $tax = '')
  * @method static \Kawa\Routing\Router isTime(callable|array|string $handler)
  * @method static \Kawa\Routing\Router isYear(callable|array|string $handler)
- * @method static \Kawa\Routing\Router condition(callable|array|string $handler)
+ * @method static \Kawa\Routing\Router condition(string|array $condition, callable|array|string $handler)
  * @method static \Illuminate\Support\Collection collection()
  * @method static array routes(string $method)
  * @method static void methods(string|array $methods, string $uri, callable|array|string $handler)
