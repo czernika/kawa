@@ -7,20 +7,52 @@ namespace Kawa\Models;
 abstract class BaseModel
 {
 
+	/**
+	 * Define main model properties
+	 *
+	 * @return void
+	 */
 	abstract protected function init();
 
-	public function __get(string $name) : mixed
+	/**
+	 * Get id
+	 *
+	 * @return int
+	 */
+	public function id() : int
 	{
-		return $this->getPostProperty($name);
+		return $this->id;
 	}
 
 	/**
-	 * Get property from post object
+	 * Get title
+	 *
+	 * @return string
+	 */
+	public function title() : string
+	{
+		return $this->title;
+	}
+
+	/**
+	 * Get list of allowed properties
+	 *
+	 * @return array
+	 */
+	abstract protected function getAllowedKeys() : array;
+
+	public function __get(string $name) : mixed
+	{
+		return $this->getModelProperty($name);
+	}
+
+	/**
+	 * Get property from model object
 	 *
 	 * @param string $name
 	 * @return mixed
 	 */
-	protected function getPostProperty(string $name) : mixed
+	protected function getModelProperty(string $name) : mixed
 	{
 		if (method_exists($this, $name)) {
 			return $this->$name();
@@ -30,17 +62,7 @@ abstract class BaseModel
 			$name = $this->getKey($name);
 		}
 
-		return $this->post->$name;
-	}
-
-	/**
-	 * Get list of allowed properties
-	 *
-	 * @return array
-	 */
-	protected function getAllowedKeys() : array
-	{
-		return PostMapper::getAllowedKeys();
+		return $this->entity->$name;
 	}
 
 	/**

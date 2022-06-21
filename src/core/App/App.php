@@ -60,7 +60,7 @@ class App extends AppContainer
 	}
 
 	/**
-	 * Define app engine contract
+	 * Define app template engine contract
 	 *
 	 * @param string $engine
 	 * @return void

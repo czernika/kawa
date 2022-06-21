@@ -4,16 +4,10 @@ declare(strict_types=1);
 
 namespace Kawa\Queries;
 
-use ArrayIterator;
-use Countable;
 use Illuminate\Support\Collection;
-use IteratorAggregate;
-use Kawa\Models\PostType;
-use Nette\Utils\Paginator;
-use Traversable;
 use WP_Query;
 
-class PostCollection implements Countable, IteratorAggregate
+class PostCollection extends QueryCollection
 {
 
 	/**
@@ -45,6 +39,7 @@ class PostCollection implements Countable, IteratorAggregate
 	protected ?Pagination $pagination = null;
 
 	public function __construct(
+		protected string $as,
 		protected WP_Query $query,
 		protected string $paged = 'paged',
 	) {
@@ -54,6 +49,8 @@ class PostCollection implements Countable, IteratorAggregate
 		$this->total = $query->found_posts;
 
 		$this->pagination = new Pagination($query->max_num_pages, $paged);
+
+		$this->countable = $this->getPosts();
 	}
 
 	/**
@@ -69,13 +66,12 @@ class PostCollection implements Countable, IteratorAggregate
 	/**
 	 * Convert WP_Post object into BaseModel objects
 	 *
-	 * @param string $as
 	 * @return Collection
 	 */
-	protected function mapPosts(string $as = PostType::class) : Collection
+	protected function mapPosts() : Collection
 	{
 		return collect($this->query->posts)
-			->mapInto($as);
+			->mapInto($this->as);
 	}
 
 	/**
@@ -107,26 +103,6 @@ class PostCollection implements Countable, IteratorAggregate
 	public function getQuery() : WP_Query
 	{
 		return $this->query;
-	}
-
-	/**
-	 * Count total amount of posts
-	 *
-	 * @return integer
-	 */
-	public function count(): int
-	{
-		return count($this->getPosts());
-	}
-
-	/**
-	 * Make collection iterable
-	 *
-	 * @return Traversable
-	 */
-	public function getIterator(): Traversable
-	{
-		return new ArrayIterator($this->getPosts());
 	}
 
 	/**

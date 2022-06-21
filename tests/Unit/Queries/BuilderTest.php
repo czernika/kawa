@@ -16,7 +16,7 @@ class BuilderTest extends TestCase
 
 	protected function setUp(): void
 	{
-		$this->builder = new Builder();
+		$this->builder = new Builder('dummy');
 	}
 
 	/** @group builder */

@@ -4,12 +4,23 @@ declare(strict_types=1);
 
 namespace Kawa\Models;
 
-use Kawa\Queries\Builder;
+use Kawa\Queries\PostTypeBuilder;
+use Kawa\Queries\Relations\HasTaxonomy;
 use WP_Post;
 use WP_User;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $guid
+ * @property string $content
+ * @property string $excerpt
+ * @property string $created_at
+ * @property string $updated_at
+ */
 class PostType extends BaseModel
 {
+	use HasTaxonomy;
 
 	/**
 	 * Post type slug
@@ -86,38 +97,30 @@ class PostType extends BaseModel
 	}
 
 	/**
+	 * Get list of allowed properties
+	 *
+	 * @return array
+	 */
+	protected function getAllowedKeys() : array
+	{
+		return PostMapper::getAllowedKeys();
+	}
+
+	/**
 	 * Init object
 	 *
 	 * @return void
 	 */
 	protected function init()
 	{
-		foreach(PostMapper::getAllowedKeys() as $key => $property) {
+		foreach($this->getAllowedKeys() as $key => $property) {
 			$this->$key = $this->post->$property;
 		}
 
 		$this->author = get_user_by('id', $this->post->post_author);
 		$this->url = get_permalink($this->post);
-	}
 
-	/**
-	 * Get post type id
-	 *
-	 * @return int
-	 */
-	public function id() : int
-	{
-		return $this->id;
-	}
-
-	/**
-	 * Get post type title
-	 *
-	 * @return string
-	 */
-	public function title() : string
-	{
-		return $this->title;
+		$this->entity = $this->post;
 	}
 
 	/**
@@ -199,7 +202,7 @@ class PostType extends BaseModel
 	 */
 	public static function __callStatic(string $name, array $arguments) : mixed
 	{
-		$builder = new Builder(['post_type' => static::POST_TYPE]);
+		$builder = new PostTypeBuilder(static::class, ['post_type' => static::POST_TYPE]);
 		return call_user_func_array([$builder, $name], $arguments);
 	}
 }

@@ -122,6 +122,8 @@ server:
 
 Run `./vendor/bin/phpunit`
 
+> A lot more required...
+
 ## License
 
 Runs under MIT license
@@ -188,11 +190,14 @@ Runs under MIT license
 ### Models
 
 - [x] Post Type model attributes
+- [ ] Post type meta fields
 - [ ] Post type meta fields as attributes
-- [ ] Post type taxonomy relations
+- [x] HasTaxonomy relation
+- [ ] HasPostType relation
 - [ ] Post type thumb
 - [x] Post type author
-- [ ] Taxonomy model
+- [x] Taxonomy model
+- [ ] Taxonomy meta fields
 - [ ] Taxonomy meta fields as attributes
 - [ ] Model registration
 - [ ] Users
