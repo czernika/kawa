@@ -69,6 +69,6 @@ $app->singleton(
  * Run Forest Run!
  * -------------------------------------------------------------------------
  *
- * Finally boot application itself on init hook
+ * Finally boot application itself
  */
-add_action('init', [$app, 'boot']);
+$app->boot();

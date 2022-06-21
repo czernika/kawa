@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Kawa\App\App;
 use Kawa\Foundation\KernelInterface;
 use Kawa\Providers\ContainerServiceProvider;
+use Kawa\Providers\MetaFieldsServiceProvider;
 
 abstract class RunServiceProviders implements BootInterface
 {
@@ -26,6 +27,7 @@ abstract class RunServiceProviders implements BootInterface
 	 */
 	protected array $appServiceProviders = [
 		ContainerServiceProvider::class,
+		MetaFieldsServiceProvider::class,
 	];
 
 	/**

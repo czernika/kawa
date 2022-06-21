@@ -88,11 +88,21 @@ class App extends AppContainer
 	 */
 	public function runBootstrappers() : void
 	{
-		$bootstrappers = $this->getBootstrappers();
-		foreach ($bootstrappers as $bootstrapper) {
-			if (method_exists($bootstrapper, 'run')) {
-				$this->call([$bootstrapper, 'run'], [$this]);
-			}
+		foreach ($this->getBootstrappers() as $bootstrapper) {
+			$this->runBoostrapper($bootstrapper);
+		}
+	}
+
+	/**
+	 * Run bootstrapper
+	 *
+	 * @param string $bootstrapper
+	 * @return void
+	 */
+	protected function runBoostrapper(string $bootstrapper) : void
+	{
+		if (method_exists($bootstrapper, 'run')) {
+			$this->call([$bootstrapper, 'run'], [$this]);
 		}
 	}
 

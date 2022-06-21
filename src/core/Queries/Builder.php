@@ -12,6 +12,18 @@ class Builder
 	) {}
 
 	/**
+	 * Create unique query
+	 *
+	 * @param array $query
+	 * @return static
+	 */
+	public function query(array $query) : static
+	{
+		$this->mergeQueryArguments($query);
+		return $this;
+	}
+
+	/**
 	 * Get query arguments
 	 *
 	 * @return array

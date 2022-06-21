@@ -189,7 +189,7 @@ Runs under MIT license
 
 ### Models
 
-- [x] Post Type model attributes
+- [x] Post Type model
 - [ ] Post type meta fields
 - [ ] Post type meta fields as attributes
 - [x] HasTaxonomy relation
