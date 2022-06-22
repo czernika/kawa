@@ -193,7 +193,7 @@ Runs under MIT license
 - [ ] Post type meta fields
 - [ ] Post type meta fields as attributes
 - [x] HasTaxonomy relation
-- [ ] HasPostType relation
+- [x] BelongsToPostType relation
 - [ ] Post type thumb
 - [x] Post type author
 - [x] Taxonomy model

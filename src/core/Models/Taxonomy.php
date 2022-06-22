@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kawa\Models;
 
+use Kawa\Queries\Relations\BelongsToPostType;
 use Kawa\Queries\TaxBuilder;
 use WP_Term;
 
@@ -13,6 +14,7 @@ use WP_Term;
  */
 class Taxonomy extends BaseModel
 {
+	use BelongsToPostType;
 
 	public const TAXONOMY = 'category';
 
