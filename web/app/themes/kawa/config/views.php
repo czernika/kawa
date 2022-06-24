@@ -47,8 +47,8 @@ return [
 		/**
 		 * When fetching all records it may be useful to set limit
 		 *
-		 * Default: `-1` (fetch all)
+		 * Default: 500
 		 */
-		'limit' => -1,
+		'limit' => 500,
 	],
 ];

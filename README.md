@@ -179,7 +179,7 @@ Runs under MIT license
 ### Response
 
 - [x] View Response
-- [ ] Output Response
+- [x] Output Response
 - [x] Exception Response
 - [x] Basic Redirect Response
 - [ ] Advanced Redirect Response and helpers (to, url, route, with, flash, back, home)
@@ -191,23 +191,32 @@ Runs under MIT license
 
 - [x] Post Type model
 - [ ] Post type meta fields
-- [ ] Post type meta fields as attributes
+- [ ] Post type meta fields registration
+- [x] Post type meta fields as attributes
+- [x] Post type meta fields as `meta()` method
 - [x] HasTaxonomy relation
 - [x] BelongsToPostType relation
 - [ ] Post type thumb
 - [x] Post type author
 - [x] Taxonomy model
 - [ ] Taxonomy meta fields
+- [ ] Taxonomy meta fields registration
 - [ ] Taxonomy meta fields as attributes
-- [ ] Model registration
+- [ ] Taxonomy meta fields as `meta()` method
+- [ ] Custom Post Type registration
+- [ ] Custom Taxonomy registration
 - [ ] Users
+- [ ] User meta fields
+- [ ] User meta fields registration
 - [ ] User meta fields as attributes
+- [ ] User meta fields as `meta()` method
 - [ ] Authenticatable model
 - [ ] Comments
+- [ ] Comments meta fields
+- [ ] Comments meta fields registration
 - [ ] Comments meta fields as attributes
+- [ ] Comments meta fields as `meta()` method
 - [ ] Attachments
-- [ ] Metaboxes (Carbon Fields)
-- [ ] Metaboxes (ACF)
 - [ ] CRUD
 
 ### Queries

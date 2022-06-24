@@ -97,10 +97,6 @@ abstract class Kernel implements KernelInterface
 			$response = $this->throwExceptionPage($th);
 		}
 
-		if (is_string($response)) {
-			return new Response($response);
-		}
-
 		return $response;
 	}
 
@@ -194,6 +190,10 @@ abstract class Kernel implements KernelInterface
 	{
 		if ($response instanceof Redirector) {
 			return $response->send();
+		}
+
+		if (is_string($response)) {
+			return new Response($response);
 		}
 
 		return $response;

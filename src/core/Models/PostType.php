@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Kawa\Models;
 
+use Kawa\Models\Exceptions\MetaIsNotDefinedException;
+use Kawa\Models\Metaboxes\PostMeta;
 use Kawa\Queries\PostTypeBuilder;
 use Kawa\Queries\Relations\HasTaxonomy;
 use WP_Post;
@@ -90,6 +92,13 @@ class PostType extends BaseModel
 	 */
 	protected string $updated_at;
 
+	/**
+	 * Metaboxes object if exists
+	 *
+	 * @var PostMeta|null
+	 */
+	public ?PostMeta $meta = null;
+
 	public function __construct(
 		protected WP_Post $post,
 	) {
@@ -121,6 +130,8 @@ class PostType extends BaseModel
 		$this->url = get_permalink($this->post);
 
 		$this->entity = $this->post;
+
+		$this->meta = new PostMeta($this);
 	}
 
 	/**
@@ -191,6 +202,24 @@ class PostType extends BaseModel
 	public function updatedAt() : string
 	{
 		return $this->updated_at;
+	}
+
+	/**
+	 * Get one time meta key
+	 *
+	 * TODO refactor
+	 * @todo refactor for duplicates
+	 * @throws MetaIsNotDefinedException if no registration property exists
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function meta(string $key) : mixed
+	{
+		if (!$this->hasMetaboxes()) {
+			throw new MetaIsNotDefinedException();
+		}
+
+		return carbon_get_post_meta($this->id(), $key);
 	}
 
 	/**

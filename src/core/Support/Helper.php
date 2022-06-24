@@ -88,6 +88,19 @@ class Helper
 	}
 
 	/**
+	 * Get simple string response from string
+	 *
+	 * @param string $content
+	 * @param int $status
+	 * @param array $headers
+	 * @return ResponseInterface
+	 */
+	public static function outputResponse(string $content, int $status = Response::HTTP_OK, array $headers = []) : ResponseInterface
+	{
+		return new Response($content, $status, $headers);
+	}
+
+	/**
 	 * Get redirect response
 	 *
 	 * @param string|null $to
@@ -136,7 +149,7 @@ class Helper
 	}
 
 	/**
-	 * Get route by its name
+	 * Get route uri by its name
 	 *
 	 * @param string $name
 	 * @throws NamedRouteException

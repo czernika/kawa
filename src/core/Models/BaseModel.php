@@ -54,10 +54,6 @@ abstract class BaseModel
 	 */
 	protected function getModelProperty(string $name) : mixed
 	{
-		if (method_exists($this, $name)) {
-			return $this->$name();
-		}
-
 		if ($this->hasKey($name)) {
 			$name = $this->getKey($name);
 		}
@@ -89,5 +85,15 @@ abstract class BaseModel
 		}
 
 		return null;
+	}
+
+	/**
+	 * Define does this model has metaboxes
+	 *
+	 * @return boolean
+	 */
+	public function hasMetaboxes() : bool
+	{
+		return property_exists($this, 'hasMetaboxes') && true === $this->hasMetaboxes;
 	}
 }

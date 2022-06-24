@@ -143,6 +143,22 @@ if (!function_exists('view')) {
 	}
 }
 
+if (!function_exists('output')) {
+
+	/**
+	 * Convert string into response instance
+	 *
+	 * @param string $content
+	 * @param int $status
+	 * @param array $headers
+	 * @return ResponseInterface
+	 */
+	function output(string $content, int $status = Response::HTTP_OK, array $headers = []) : ResponseInterface
+	{
+		return Helper::outputResponse($content, $status, $headers);
+	}
+}
+
 if (!function_exists('redirect')) {
 
 	/**

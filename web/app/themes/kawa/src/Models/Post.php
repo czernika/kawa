@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Theme\Models;
 
+use Kawa\Models\Metaboxes\HasMetaboxes;
 use Kawa\Models\PostType;
 use Kawa\Queries\TermCollection;
 
